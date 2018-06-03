@@ -14,7 +14,7 @@
 // @supportURL			https://steamcn.com/t339531-1-1
 // @supportURL			https://greasyfork.org/scripts/36393
 // @icon				http://pan.hriq.org/steam.green.ico
-// @namespace 			https://greasyfork.org/users/155548
+// @namespace 			https://greasyfork.org/users/155548-%E9%BB%91%E5%B1%B1%E6%9D%B1%E9%9B%B2%E5%85%89%E5%9C%88%E7%A0%94%E7%A9%B6%E6%89%80
 // @namespace 			https://steamcommunity.com/profiles/76561198132556503
 // ==/UserScript==
 
