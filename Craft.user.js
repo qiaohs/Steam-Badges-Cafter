@@ -1,25 +1,25 @@
 // ==UserScript==
-// @name				Steam Auto Mass Craft Cards Badges in Bulk
+// @name			Steam Auto Mass Craft Cards Badges in Bulk
 // @name:zh-CN			Steam一键批量合卡合徽章
 // @name:zh-TW			Steam一鍵批量合卡合徽章
-// @version	 			0.7
+// @version	 		0.7
 // @description			It will automatically use up ALL your gamecard sets for crafting badges and you should use it at your own risk, Though you can control the which card sets and how many sets to craft by using it.
-// @description:zh-CN	这是一个自动合卡插件，可以指定徽章合成的数量和种类
-// @description:zh-TW	這是一個自動合卡挿件，可以指定徽章合成的數量和種類
-// @author				QHS
-// @include				*steamcommunity.com/*/badges/
-// @include				*steamcommunity.com/*/badges
-// @require				https://code.jquery.com/jquery-3.2.1.min.js
-// @grant				GM_addStyle
+// @description:zh-CN		这是一个自动合卡插件，可以指定徽章合成的数量和种类
+// @description:zh-TW		這是一個自動合卡挿件，可以指定徽章合成的數量和種類
+// @author			QHS
+// @include			*steamcommunity.com/*/badges/
+// @include			*steamcommunity.com/*/badges
+// @require			https://code.jquery.com/jquery-3.2.1.min.js
+// @grant			GM_addStyle
 // @supportURL			https://steamcn.com/t339531-1-1
 // @supportURL			https://greasyfork.org/scripts/36393
-// @icon				http://pan.hriq.org/steam.green.ico
+// @icon			http://pan.hriq.org/steam.green.ico
 // @namespace 			https://greasyfork.org/users/155548-黑山東雲光圈研究所
 // @namespace 			https://steamcommunity.com/profiles/76561198132556503
 // ==/UserScript==
 
 const	timer_scan = 1000,			//扫描卡组间隔 Interval: between badges scans（ms）[500+ recommended]
-		timer_craft = 500,			//合成卡牌间隔 Interval: between crafting card sets（ms）[100+ recommended]
+		timer_craft = 500,		//合成卡牌间隔 Interval: between crafting card sets（ms）[100+ recommended]
 		sales=["245070","762800"],	//Appid for sales cards
 		config_cap_level = 0;		//Set 1 if you want to craft all badges up to level 1 [1 - 5]
 (function() {
