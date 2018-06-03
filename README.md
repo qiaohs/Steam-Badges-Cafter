@@ -1,5 +1,5 @@
-#Steam Auto Mass Craft Cards Badges in Bulk
-#Steam一键批量合卡合徽章
+# Steam Auto Mass Craft Cards Badges in Bulk
+# Steam一键批量合卡合徽章
 听说土豪合卡要一个小时？
 
 ============================================================
