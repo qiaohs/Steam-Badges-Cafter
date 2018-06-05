@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name			Steam Crafter
+// @name			Steam Badges Crafter
 // @name:zh-CN			Steam一键批量合卡合徽章
 // @name:zh-TW			Steam一鍵批量合卡合徽章
 // @version	 		1.0
