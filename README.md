@@ -1,4 +1,4 @@
-# Steam Badges Cafter 一键批量合卡合徽章
+# Steam Badges Cafter
 
 Close Steam badges WEBPAGE when you want to stop crafting!
 Now you can set intervals and blacklist badges in setting.
@@ -14,6 +14,7 @@ Istall
 2. Click [here](https://greasyfork.org/scripts/36393-steam-auto-mass-craft-cards-badges-in-bulk/code/Steam%20Auto%20Mass%20Craft%20Cards%20Badges%20in%20Bulk.user.js)
 3. You can use the Steam badges crafter script at [badges page](https://steamcommunity.com/my/badges) by clicking the button on right side.
 
+# 一键批量合卡合徽章
 
 听说土豪合卡要一个小时？
 
