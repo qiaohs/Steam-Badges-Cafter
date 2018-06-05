@@ -34,6 +34,7 @@ Istall
 2. 安装本脚本（点击上面的“安装此脚本”）后在弹出页面点击安装。或者打开[此链接](https://greasyfork.org/scripts/36393-steam-auto-mass-craft-cards-badges-in-bulk/code/Steam%20Auto%20Mass%20Craft%20Cards%20Badges%20in%20Bulk.user.js)后在弹出页面点击安装。
 3. 登陆Steam后打开[徽章页面](https://steamcommunity.com/my/badges)，点击等级右侧的批量合成按钮
 
-
-![Rapid mode demo](http://pan.hriq.org/steam_crafter_1.gif)
-![Calculation mode demo](http://pan.hriq.org/steam_crafter_2.gif)
+Demo
+---
+![Rapid mode demo](https://raw.githubusercontent.com/qiaohs/Steam-Badges-Cafter/master/res/steam_crafter_1.gif)
+![Calculation mode demo](https://raw.githubusercontent.com/qiaohs/Steam-Badges-Cafter/master/res/steam_crafter_2.gif)
