@@ -57,8 +57,7 @@ var		timer_scan = GM_getValue("timer_scan", 1000),			//扫描卡组间隔 Interv
 	transition: .5s;
 	background-repeat: no-repeat;
 	background-position-x: -46px;
-	background-image: url(data:image/png;
-	base64,iVBORw0KGgoAAAANSUhEUgAAAC4AAAAPCAYAAACbSf2kAAAACXBIWXMAAC4jAAAuIwF4pT92AAAAKUlEQVR42mOIOmPwfyhihlGHjzp81OGjDh91+KjDRx0+6vBRh486HI4BdWZJdZDgwMoAAAAASUVORK5CYII=)
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC4AAAAPCAYAAACbSf2kAAAACXBIWXMAAC4jAAAuIwF4pT92AAAAKUlEQVR42mOIOmPwfyhihlGHjzp81OGjDh91+KjDRx0+6vBRh486HI4BdWZJdZDgwMoAAAAASUVORK5CYII=")
 }
 
 .cannot_craft {
@@ -84,7 +83,6 @@ var		timer_scan = GM_getValue("timer_scan", 1000),			//扫描卡组间隔 Interv
 
 div.craft_list {
 	padding: 10px 0 95px 0;
-	;
 }
 
 .craft_list.dischange input {
