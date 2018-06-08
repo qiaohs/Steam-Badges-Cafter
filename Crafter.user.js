@@ -736,10 +736,10 @@ span.b_icon._cancel {
                     sum_crafted_r += 1;
                     $J('.sum_crafted').text(sum_crafted_r);
                     $J('.sum_xp').text('+' + (sum_crafted_r * 100) + 'XP');
-                    if($J('font[data-app='+appid+']').length>0){
-                        $J('font[data-app='+appid+']').html($J('font[data-app='+appid+']').html()*1+1)
+                    if($J('font[data-app='+appid+'_'+border+']').length>0){
+                        $J('font[data-app='+appid+'_'+border+']').html($J('font[data-app='+appid+'_'+border+']').html()*1+1)
                     }else{
-                        $J('.craft_list').append("Crafted <font style='color:#fff'data-app='"+appid+"'>1</font> sets for "+gappid+" badge<br>");
+                        $J('.craft_list').append("Crafted <font style='color:#fff'data-app='"+appid+'_'+border+"'>1</font> sets for "+gappid+" badge<br>");
                     }
 
 
