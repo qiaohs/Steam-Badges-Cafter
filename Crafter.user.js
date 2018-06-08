@@ -2,7 +2,7 @@
 // @name			Steam Auto Mass Craft Cards Badges in Bulk
 // @name:zh-CN			Steam一键批量合卡合徽章
 // @name:zh-TW			Steam一鍵批量合卡合徽章
-// @version	 		1.2
+// @version	 		1.21
 // @description			(Steam Auto Mass Craft Trading Cards Badges in Bulk) It will automatically use up your gamecard sets for crafting badges. You can control the which card sets and how many sets to craft by using it.
 // @description:zh-CN		这是一个自动合卡插件，可以指定徽章合成的数量和种类
 // @description:zh-TW		這是一個自動合卡挿件，可以指定徽章合成的數量和種類
@@ -774,7 +774,7 @@ span.b_icon._cancel {
         timer_scan=$J("input.timer_scan").val();
         timer_craft=$J("input.timer_craft").val();
         config_blacklist=$J("textarea.config_blacklist").val();
-        blacklist = eval('['+config_blacklist.replace(/[^0-9,]/,'')+']');
+        blacklist = eval('['+config_blacklist.replace(/[^0-9,]/g,'')+']');
     }
 
     function GetPercent(num, total) {
