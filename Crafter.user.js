@@ -2,7 +2,7 @@
 // @name			Steam Auto Mass Craft Cards Badges in Bulk
 // @name:zh-CN			Steam一键批量合卡合徽章
 // @name:zh-TW			Steam一鍵批量合卡合徽章
-// @version	 		1.21
+// @version	 		1.3
 // @description			(Steam Auto Mass Craft Trading Cards Badges in Bulk) It will automatically use up your gamecard sets for crafting badges. You can control the which card sets and how many sets to craft by using it.
 // @description:zh-CN		这是一个自动合卡插件，可以指定徽章合成的数量和种类
 // @description:zh-TW		這是一個自動合卡挿件，可以指定徽章合成的數量和種類
@@ -260,8 +260,24 @@ span.b_icon._confirm {
 
 span.b_icon._cancel {
 	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAB8klEQVRIS5WWS2tUQRBGz4f4ICgqOMnCwddG1JUrNzEGMZg4e3f+Pn+ACL7wjeDORQwExI1kERGUIEHHRUkN3WN7p293z93d21V9blVXfdWi85jZaeCrpD/dtdq7mR0EFiXtpLZKX8xsFXgEbAErkn7WNo7rZnYUeA1cBtYlvYxrU4iZrQEPgMNh8T1wU9J+DRQAz4BrwfZ3CppAAuAh4OGmz1vgdgmUAUT/KUhmNgA8h11ANHbQmqRfmfPzFKURdE3c57xDjgGbwJlCWp4DoxRkZguAf48pyrk/Bu7EdHlFvWsAbUgaB4BvsNzyY+nBO8ir40LB0Te+C/j5NQF8r24JL4WISqAfwInCj8yc4X+QUGkOegVcrJVuZj1bjTOQADoFeDNdmQPUW+5ZSACdBN40gor91AsJoHPAJ+BAISJvuqGkb302pUiOAy+Aqw0pmz+SROxaAKkyZCUoV101qSgFVq+uRqmoZa+/Txql4jNwD7jfIEFTrYvadQR4WpGKbeCGpN0wPVu0bgJyFfbyfOIDqpAHByynZRpALVo3cojLyJfCPPkIrOb6IPiWJMh76GxtMjrguqTvfVGaWZ8E/ZuM0Tkzgj+EGd8LSHy7EjQ74zMgB9yStFer1w7IJ+Wl3ttKYjwM965xKyDxPQQMuveuvyh740KkKGZ2AAAAAElFTkSuQmCC")!important;
-}`);
+}
+
+.level_up > span {
+    position: relative;
+    top: -2px;
+}
+
+font.level_up {
+    font-size: 24px;
+    color: #ffc902;
+}
+.target_level{
+    color:#fff;
+}
+
+`);
     var _border, g_sessionID, badge_cap_level, __appID, _gappid,blacklist=[];
+	var cur_xp = $J('.profile_xp_block_xp').html().replace(/[^0-9]/g,'')*1;
     var text = {},
         lan = $J('head').html().match(/l=([^"&*]+)"/)[1];
     if (lan == "schinese" || lan == "tchinese") {
@@ -306,7 +322,7 @@ span.b_icon._cancel {
         text.button2 = "Start Crafting!";
         text.button2no = "No Cards for Crafting!";
         text.calculating = "Calculating, you can close this pop-up window in the process of calculation";
-        text.calculated = "Enter the times you want to craft for the badges. Confirm and craft them by click the green button below";
+        text.calculated = "Enter the number of cards sets you want to craft for the badges. Confirm and craft them by click the green button below";
         text.crafting = "Crafting! You can close this pop-up window in the process of crafting";
         text.crafted = "Finished!";
         text.list1 = 'sets to craft';
@@ -467,7 +483,8 @@ span.b_icon._cancel {
                         $J('.window_title').html(text.calculated);
                         $J('#start').addClass('start_2').removeClass('start_1');
                         $J('#start>div').addClass('btn_green_white_innerfade').removeClass('btn_grey_white_innerfade');
-                        $J('#start').before('<p class="before_c" style="margin: 4px 0 15px 0;text-align: center; font-size: 18px; color: #fff;"><font class="sum_sets" style="font-size: 22px;">' + sum_sets + '</font> sets(<font class="sum_badges" style="font-size: 22px;">' + sum_badges + '</font> badges) to craft!</p>');
+						var cur_lv = ivscc(cur_xp), tar_lv = ivscc(cur_xp+(sum_sets)*100);
+                        $J('#start').before('<p class="before_c" style="margin: 4px 0 15px 0;text-align: center; font-size: 18px; color: #fff;"><font class="sum_sets" style="font-size: 22px;">' + sum_sets + '</font> sets ( <font class="sum_badges" style="font-size: 22px;">' + sum_badges + '</font> badges ) to craft!<font class="level_up"> [ <span class="friendPlayerLevel lvl_'+Math.floor(cur_lv/100)*100+' lvl_plus_'+Math.floor((cur_lv%100)/10)*10+'"><span class="friendPlayerLevelNum">'+cur_lv+'</span></span> <font class="target_level">&gt;</font> <span class="friendPlayerLevel lvl_'+Math.floor(tar_lv/100)*100+' lvl_plus_'+Math.floor((tar_lv%100)/10)*10+'"><span class="friendPlayerLevelNum">'+tar_lv+'</span></span> ]</font></p>');
                         $J('.craft_list').append("<p style='text-align:center;margin-top: 15px; letter-spacing: 8px;'>=========END=========</p>");
                     }
 
@@ -582,6 +599,8 @@ span.b_icon._cancel {
             }
             $J('font.sum_badges').html(sum_badges);
             $J('font.sum_sets').html(sum_sets);
+			var tar_lv = ivscc(cur_xp+sum_sets*100);
+			$J('font.target_level+.friendPlayerLevel').prop("outerHTML",'<span class="friendPlayerLevel lvl_'+Math.floor(tar_lv/100)*100+' lvl_plus_'+Math.floor((tar_lv%100)/10)*10+'"><span class="friendPlayerLevelNum">'+tar_lv+'</span></span>');
         });
         if (sum_badges === 0) {
             $J('#start>div').addClass('cannot_craft');
@@ -785,5 +804,18 @@ span.b_icon._cancel {
         }
         return total <= 0 ? "0%": (Math.round(num / total * 10000) / 100.00 + "%");
     }
+
+	function cc(a){
+		a=a;
+		var b=Math.ceil(a/10);
+		return ((1+b)*b*5-(b*10-a)*b)*100;
+	}
+
+	function ivscc(exp){
+		for(var a=1;;a++){
+			var b=Math.ceil(a/10);
+			if((1+b)*b*5-(b*10-a)*b>exp/100){return a-1;}
+		}
+	}
 
 })();
