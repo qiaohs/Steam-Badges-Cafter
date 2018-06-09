@@ -2,7 +2,7 @@
 // @name			Steam Auto Mass Craft Cards Badges in Bulk
 // @name:zh-CN			Steam一键批量合卡合徽章
 // @name:zh-TW			Steam一鍵批量合卡合徽章
-// @version	 		1.3
+// @version	 		1.4
 // @description			(Steam Auto Mass Craft Trading Cards Badges in Bulk) It will automatically use up your gamecard sets for crafting badges. You can control the which card sets and how many sets to craft by using it.
 // @description:zh-CN		这是一个自动合卡插件，可以指定徽章合成的数量和种类
 // @description:zh-TW		這是一個自動合卡挿件，可以指定徽章合成的數量和種類
@@ -16,11 +16,11 @@
 // @namespace 			https://greasyfork.org/users/155548
 // @namespace 			https://steamcommunity.com/profiles/76561198132556503
 // ==/UserScript==
-var		timer_scan = GM_getValue("timer_scan", 1000),			//扫描卡组间隔 Interval: between badges scans（ms）[500+ recommended]
-    timer_craft = GM_getValue("timer_craft", 500),			//合成卡牌间隔 Interval: between crafting card sets（ms）[100+ recommended]
-    sales=["245070","762800"],								//Appid for sales cards
-    config_cap_level = GM_getValue("config_cap_level", 0),	//Set 1 if you want to craft all badges up to level 1 [1 - 5]
-    config_blacklist = GM_getValue("config_blacklist", '');	//Set 1 if you want to craft all badges up to level 1 [1 - 5]
+var		sales=["245070","762800"],//Appid for sales cards
+    timer_craft = GM_getValue("timer_craft", 500),
+    timer_scan = GM_getValue("timer_scan", 1000),
+    config_cap_level = GM_getValue("config_cap_level", 0),
+    config_blacklist = GM_getValue("config_blacklist", '');
 (function() {
     'use strict';
     GM_addStyle(`.profile_xp_block_right {
@@ -266,17 +266,146 @@ span.b_icon._cancel {
     position: relative;
     top: -2px;
 }
+.target_level_icon > span {
+    position: relative;
+    top: -2px;
+}
 
 font.level_up {
     font-size: 24px;
     color: #ffc902;
 }
+.target_level_icon {
+        display: inline-block;
+}
 .target_level{
     color:#fff;
 }
 
+.animated {
+	-webkit-animation-duration: .7s;
+	animation-duration: .7s;
+	-webkit-animation-fill-mode: both;
+	animation-fill-mode: both
+}
+
+.animated.infinite {
+	-webkit-animation-iteration-count: infinite;
+	animation-iteration-count: infinite
+}
+
+.animated.hinge {
+	-webkit-animation-duration: 2s;
+	animation-duration: 2s
+}
+
+@-webkit-keyframes bounce {
+	0%,100%,20%,50%,80% {
+		-webkit-transform: translateY(0);
+		transform: translateY(0)
+	}
+
+	40% {
+		-webkit-transform: translateY(-10px);
+		transform: translateY(-10px)
+	}
+
+	60% {
+		-webkit-transform: translateY(-5px);
+		transform: translateY(-5px)
+	}
+}
+
+@keyframes bounce {
+	0%,100%,20%,50%,80% {
+		-webkit-transform: translateY(0);
+		-ms-transform: translateY(0);
+		transform: translateY(0)
+	}
+
+	40% {
+		-webkit-transform: translateY(-10px);
+		-ms-transform: translateY(-10px);
+		transform: translateY(-10px)
+	}
+
+	60% {
+		-webkit-transform: translateY(-5px);
+		-ms-transform: translateY(-5px);
+		transform: translateY(-5px)
+	}
+}
+
+.bounce {
+	-webkit-animation-name: bounce;
+	animation-name: bounce
+}
+@-webkit-keyframes rubberBand {
+	0% {
+		-webkit-transform: scale(1);
+		transform: scale(1)
+	}
+
+	30% {
+		-webkit-transform: scaleX(1.25) scaleY(0.75);
+		transform: scaleX(1.25) scaleY(0.75)
+	}
+
+	40% {
+		-webkit-transform: scaleX(0.75) scaleY(1.25);
+		transform: scaleX(0.75) scaleY(1.25)
+	}
+
+	60% {
+		-webkit-transform: scaleX(1.15) scaleY(0.85);
+		transform: scaleX(1.15) scaleY(0.85)
+	}
+
+	100% {
+		-webkit-transform: scale(1);
+		transform: scale(1)
+	}
+}
+
+@keyframes rubberBand {
+	0% {
+		-webkit-transform: scale(1);
+		-ms-transform: scale(1);
+		transform: scale(1)
+	}
+
+	30% {
+		-webkit-transform: scaleX(1.25) scaleY(0.75);
+		-ms-transform: scaleX(1.25) scaleY(0.75);
+		transform: scaleX(1.25) scaleY(0.75)
+	}
+
+	40% {
+		-webkit-transform: scaleX(0.75) scaleY(1.25);
+		-ms-transform: scaleX(0.75) scaleY(1.25);
+		transform: scaleX(0.75) scaleY(1.25)
+	}
+
+	60% {
+		-webkit-transform: scaleX(1.15) scaleY(0.85);
+		-ms-transform: scaleX(1.15) scaleY(0.85);
+		transform: scaleX(1.15) scaleY(0.85)
+	}
+
+	100% {
+		-webkit-transform: scale(1);
+		-ms-transform: scale(1);
+		transform: scale(1)
+	}
+}
+
+.rubberBand {
+	-webkit-animation-name: rubberBand;
+	animation-name: rubberBand
+}
+
 `);
-    var _border, g_sessionID, badge_cap_level, __appID, _gappid,blacklist=[];
+    var _border, g_sessionID, badge_cap_level, __appID, _gappid,blacklist=[],tar_lv,o_tar_lv;
 	var cur_xp = $J('.profile_xp_block_xp').html().replace(/[^0-9]/g,'')*1;
     var text = {},
         lan = $J('head').html().match(/l=([^"&*]+)"/)[1];
@@ -484,7 +613,7 @@ font.level_up {
                         $J('#start').addClass('start_2').removeClass('start_1');
                         $J('#start>div').addClass('btn_green_white_innerfade').removeClass('btn_grey_white_innerfade');
 						var cur_lv = ivscc(cur_xp), tar_lv = ivscc(cur_xp+(sum_sets)*100);
-                        $J('#start').before('<p class="before_c" style="margin: 4px 0 15px 0;text-align: center; font-size: 18px; color: #fff;"><font class="sum_sets" style="font-size: 22px;">' + sum_sets + '</font> sets ( <font class="sum_badges" style="font-size: 22px;">' + sum_badges + '</font> badges ) to craft!<font class="level_up"> [ <span class="friendPlayerLevel lvl_'+Math.floor(cur_lv/100)*100+' lvl_plus_'+Math.floor((cur_lv%100)/10)*10+'"><span class="friendPlayerLevelNum">'+cur_lv+'</span></span> <font class="target_level">&gt;</font> <span class="friendPlayerLevel lvl_'+Math.floor(tar_lv/100)*100+' lvl_plus_'+Math.floor((tar_lv%100)/10)*10+'"><span class="friendPlayerLevelNum">'+tar_lv+'</span></span> ]</font></p>');
+                        $J('#start').before('<p class="before_c" style="margin: 4px 0 15px 0;text-align: center; font-size: 18px; color: #fff;"><font class="sum_sets" style="font-size: 22px;">' + sum_sets + '</font> sets ( <font class="sum_badges" style="font-size: 22px;">' + sum_badges + '</font> badges ) to craft!<font class="level_up"> [ '+icon_raw(cur_lv)+' <font class="target_level">&gt;</font> '+icon_raw(tar_lv)+' ]</font></p>');
                         $J('.craft_list').append("<p style='text-align:center;margin-top: 15px; letter-spacing: 8px;'>=========END=========</p>");
                     }
 
@@ -600,7 +729,7 @@ font.level_up {
             $J('font.sum_badges').html(sum_badges);
             $J('font.sum_sets').html(sum_sets);
 			var tar_lv = ivscc(cur_xp+sum_sets*100);
-			$J('font.target_level+.friendPlayerLevel').prop("outerHTML",'<span class="friendPlayerLevel lvl_'+Math.floor(tar_lv/100)*100+' lvl_plus_'+Math.floor((tar_lv%100)/10)*10+'"><span class="friendPlayerLevelNum">'+tar_lv+'</span></span>');
+			icon($J('font.target_level+.friendPlayerLevel'),tar_lv);
         });
         if (sum_badges === 0) {
             $J('#start>div').addClass('cannot_craft');
@@ -723,7 +852,8 @@ font.level_up {
             }
             if($J.inArray(__appID*1,blacklist)<0&&badge_cap_level>0){queue_r.push({appid:__appID,border:_border,gappid:_gappid,badge_cap_level:badge_cap_level*1});}//blacklist.include(__appID)
         });
-        $J('#start').before('<p class="before_c" style="margin: 4px 0 15px 0;text-align: center; font-size: 18px; color: #fff;">Crafted: <font class="sum_crafted" style="font-size: 22px;">0</font> sets <font class="sum_xp" style="font-size: 20px;color: #ffc902;"></font></p>');
+		var cur_lv = o_tar_lv = tar_lv = ivscc(cur_xp);
+        $J('#start').before('<p class="before_c" style="margin: 4px 0 15px 0;text-align: center; font-size: 18px; color: #fff;">Crafted: <font class="sum_crafted" style="font-size: 22px;">0</font> sets <font class="sum_xp" style="font-size: 20px;color: #ffc902;"></font><font class="level_up"> [ '+icon_raw(cur_lv)+' <font class="target_level">&gt;</font> <font class="target_level_icon">'+icon_raw(tar_lv)+'</font> ]</font></p>');
         rapid_post();
     }
     var sum_crafted_r=0;
@@ -755,6 +885,15 @@ font.level_up {
                     sum_crafted_r += 1;
                     $J('.sum_crafted').text(sum_crafted_r);
                     $J('.sum_xp').text('+' + (sum_crafted_r * 100) + 'XP');
+
+					var tar_lv = ivscc(cur_xp+sum_crafted_r*100);
+					if(tar_lv!=o_tar_lv){
+						icon($J('font.target_level_icon .friendPlayerLevel'),tar_lv);
+						$J('font.target_level_icon').addClass('rubberBand animated infinite');
+						setTimeout(function(){$J('font.target_level_icon').removeClass('rubberBand animated infinite');},700);
+					}
+					o_tar_lv = tar_lv;
+
                     if($J('font[data-app='+appid+'_'+border+']').length>0){
                         $J('font[data-app='+appid+'_'+border+']').html($J('font[data-app='+appid+'_'+border+']').html()*1+1)
                     }else{
@@ -815,6 +954,22 @@ font.level_up {
 		for(var a=1;;a++){
 			var b=Math.ceil(a/10);
 			if((1+b)*b*5-(b*10-a)*b>exp/100){return a-1;}
+		}
+	}
+
+	function icon(jq,tar_lv){
+		if(tar_lv<100){
+			jq.prop("outerHTML",'<span class="friendPlayerLevel lvl_'+Math.floor((tar_lv%100)/10)*10+'"><span class="friendPlayerLevelNum">'+tar_lv+'</span></span>');
+		}else{
+			jq.prop("outerHTML",'<span class="friendPlayerLevel lvl_'+Math.floor(tar_lv/100)*100+' lvl_plus_'+Math.floor((tar_lv%100)/10)*10+'"><span class="friendPlayerLevelNum">'+tar_lv+'</span></span>');
+		}
+	}
+
+	function icon_raw(tar_lv){
+		if(tar_lv<100){
+			return '<span class="friendPlayerLevel lvl_'+Math.floor((tar_lv%100)/10)*10+'"><span class="friendPlayerLevelNum">'+tar_lv+'</span></span>';
+		}else{
+			return '<span class="friendPlayerLevel lvl_'+Math.floor(tar_lv/100)*100+' lvl_plus_'+Math.floor((tar_lv%100)/10)*10+'"><span class="friendPlayerLevelNum">'+tar_lv+'</span></span>';
 		}
 	}
 
