@@ -36,5 +36,5 @@ Istall
 
 Demo
 ---
-![Rapid mode demo](https://raw.githubusercontent.com/qiaohs/Steam-Badges-Cafter/master/res/steam_crafter_4.gif)
+![Rapid mode demo](https://raw.githubusercontent.com/qiaohs/Steam-Badges-Cafter/master/res/steam_crafter_6.gif)
 ![Calculation mode demo](https://raw.githubusercontent.com/qiaohs/Steam-Badges-Cafter/master/res/steam_crafter_5.gif)
