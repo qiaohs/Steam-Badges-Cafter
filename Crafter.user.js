@@ -2,7 +2,7 @@
 // @name			Steam Auto Mass Craft Cards Badges in Bulk
 // @name:zh-CN			Steam一键批量合卡合徽章
 // @name:zh-TW			Steam一鍵批量合卡合徽章
-// @version	 		1.4
+// @version	 		1.5
 // @description			(Steam Auto Mass Craft Trading Cards Badges in Bulk) It will automatically use up your gamecard sets for crafting badges. You can control the which card sets and how many sets to craft by using it.
 // @description:zh-CN		这是一个自动合卡插件，可以指定徽章合成的数量和种类
 // @description:zh-TW		這是一個自動合卡挿件，可以指定徽章合成的數量和種類
@@ -404,15 +404,96 @@ font.level_up {
 	animation-name: rubberBand
 }
 
+input.friendPlayerLevelNum {
+    width: 28px;
+    background: transparent;
+    border: 0;
+    font-size: inherit;
+    text-align: center;
+    overflow: visible;
+}
+
+span[class$='00'] input {
+    width: 31px!important;
+}
+
+.calculator {
+    border: 1px #fff solid;
+    padding: 20px;
+	margin-top: 30px;
+}
+
+.calculator legend {
+    margin-left: 20px;
+}
+
+span#lvdiff input {
+    width: 72px;
+    background: transparent;
+    color: #000;
+    border: 0;
+    text-align: center;
+    margin: 0 10px;
+    font-size: 16px;
+}
+
+span#lvdiff {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 3px;
+    padding: 10px;
+    color: #aaa;
+}
+
+.calculator div {
+    float: left;
+}
+
+span.levelnumber input {
+    width: 66px;
+    background: transparent;
+    border: 0;
+    text-align: center;
+    overflow: visible;
+    color: #ddd;
+    font-size: 13px;
+}
+
+span.levelnumber {
+    display: block;
+    font-size: 13px;
+    position: relative;
+    left: 23px;
+	margin-top: 5px;
+}
+
+.calculator span.friendPlayerLevel {
+    margin: 0px 40px;
+}
+
+.calculator ._m {
+    position: relative;
+    top: 10px;
+}
+
+._m span {
+    float: left;
+    display: block;
+}
+
+.friendPlayerLevel.lvl_1000 input, .friendPlayerLevel.lvl_1100 input, .friendPlayerLevel.lvl_1200 input, .friendPlayerLevel.lvl_1300 input, .friendPlayerLevel.lvl_1400 input, .friendPlayerLevel.lvl_1500 input, .friendPlayerLevel.lvl_1600 input, .friendPlayerLevel.lvl_1700 input, .friendPlayerLevel.lvl_1800 input, .friendPlayerLevel.lvl_1900 input, .friendPlayerLevel.lvl_2000 input, .friendPlayerLevel.lvl_2100 input, .friendPlayerLevel.lvl_2200 input, .friendPlayerLevel.lvl_2300 input, .friendPlayerLevel.lvl_2400 input, .friendPlayerLevel.lvl_2500 input, .friendPlayerLevel.lvl_2600 input, .friendPlayerLevel.lvl_2700 input, .friendPlayerLevel.lvl_2800 input, .friendPlayerLevel.lvl_2900 input, .friendPlayerLevel.lvl_3000 input {
+    width: 32px;
+}
 `);
     var _border, g_sessionID, badge_cap_level, __appID, _gappid,blacklist=[],tar_lv,o_tar_lv;
 	var cur_xp = $J('.profile_xp_block_xp').html().replace(/[^0-9]/g,'')*1;
+    var lv01 = ivscc(cur_xp)*1;
+    var lv02 = lv01+1;
     var text = {},
         lan = $J('head').html().match(/l=([^"&*]+)"/)[1];
     if (lan == "schinese" || lan == "tchinese") {
         text.start = "批量合成徽章";
         text.title = "批量合卡";
-        text.notice = '<p>这是一个自动合卡插件，可以指定徽章合成的数量和种类。</p><p>可在<a class="underlinedLink" href="https://steamcn.com/t339531-1-1" target="_blank">SteamCN</a>、<a class="underlinedLink" href="https://github.com/qiaohs/Steam-Auto-Mass-Craft-Cards-Badges-in-Bulk" target="_blank">Github</a>、<a class="underlinedLink" href="https://greasyfork.org/en/scripts/36393" target="_blank">Greasy Fork</a>反馈问题，也可以在我的<a class="underlinedLink" href="https://steamcommunity.com/profiles/76561198132556503" target="_blank">资料页</a>下方留言（ASF经常吞消息可能看不到私聊0.0）</p></p>可以随时关闭本标签页来停止插件的自动操作</p><p><b style=color:#fff>计算模式:</b> 先扫描出每个徽章的可合成次数，扫描完毕后可以手动调整合成数量，再通过确认进行批量合卡。</p><p><b style=color:#fff>极速模式:</b> 先显示您的黑名单设置，确认后将直接合成所有可以用来合成的徽章，<font style=color:#fff>不会使用黑名单中的游戏卡牌</font>。</p><p><a class="underlinedLink" href="http://pan.hriq.org/steam_crafter_6.gif" target="_blank">Demo1</a>　<a class="underlinedLink" href="http://pan.hriq.org/steam_crafter_5.gif" target="_blank">Demo2</a></p>';
+        text.notice = '<p>这是一个自动合卡插件，可以指定徽章合成的数量和种类。</p><p>可在<a class="underlinedLink" href="https://steamcn.com/t339531-1-1" target="_blank">SteamCN</a>、<a class="underlinedLink" href="https://github.com/qiaohs/Steam-Auto-Mass-Craft-Cards-Badges-in-Bulk" target="_blank">Github</a>、<a class="underlinedLink" href="https://greasyfork.org/en/scripts/36393" target="_blank">Greasy Fork</a>反馈问题，也可以在我的<a class="underlinedLink" href="https://steamcommunity.com/profiles/76561198132556503" target="_blank">资料页</a>下方留言（ASF经常吞消息可能看不到私聊0.0）</p></p>可以随时关闭本标签页来停止插件的自动操作</p><p><b style=color:#fff>计算模式:</b> 先扫描出每个徽章的可合成次数，扫描完毕后可以手动调整合成数量，再通过确认进行批量合卡。</p><p><b style=color:#fff>极速模式:</b> 先显示您的黑名单设置，确认后将直接合成所有可以用来合成的徽章，<font style=color:#fff>不会使用黑名单中的游戏卡牌</font>。</p><p><a class="underlinedLink" href="https://raw.githubusercontent.com/qiaohs/Steam-Badges-Cafter/master/res/steam_crafter_7.gif" target="_blank">Demo1</a>　<a class="underlinedLink" href="https://raw.githubusercontent.com/qiaohs/Steam-Badges-Cafter/master/res/steam_crafter_5.gif" target="_blank">Demo2</a></p>';
         text.button1 = "开始统计本页可合成卡组(计算模式)";
         text.buttonr1 = "不管那么多了，跳过扫描直接合卡！(极速模式)";
         text.button2 = "确认无误后开始合卡";
@@ -442,10 +523,11 @@ font.level_up {
         text.attention_title3 = '除了这些在你黑名单中的游戏: ';
         text.confirm = '确认';
         text.cancel = '取消';
+        text.calculator_title='等级计算器(<font style="color:#fff">5个数字均可修改</font>)';
     } else {
         text.start = "Craft Badges in Bulk";
         text.title = "Craft Badges in Bulk";
-        text.notice = '<p><a class="underlinedLink" href="https://github.com/qiaohs/Steam-Auto-Mass-Craft-Cards-Badges-in-Bulk" target="_blank">Github</a>、<a class="underlinedLink" href="https://greasyfork.org/en/scripts/36393" target="_blank">Greasy Fork</a> or comment on <a class="underlinedLink" href="https://steamcommunity.com/profiles/76561198132556503" target="_blank">Steam profile</a>(I always miss the chat message as getting command through chat by asf) for feedback.</p><p>Close this WEBPAGE when you want to stop crafting!</p><p>You can set intervals and blacklist badges in setting.</p><p><b style=color:#fff>Calculation mode:</b> Scan and calculate max badges you can craft first and you can regulating the number of card sets for specified bagdes. Then craft.</p><p><b style=color:#fff>Rapidly mode:</b> Show you the setting of blacklist. Crafting immediately after you confirm it. It will use up ALL your available gamecard sets for crafting badges <font style=color:#fff>except</font> the games whose APPID is in the blacklist.</p><p><a class="underlinedLink" href="http://pan.hriq.org/steam_crafter_6.gif" target="_blank">Demo1</a>　<a class="underlinedLink" href="http://pan.hriq.org/steam_crafter_5.gif" target="_blank">Demo2</a></p>';
+        text.notice = '<p><a class="underlinedLink" href="https://github.com/qiaohs/Steam-Auto-Mass-Craft-Cards-Badges-in-Bulk" target="_blank">Github</a>、<a class="underlinedLink" href="https://greasyfork.org/en/scripts/36393" target="_blank">Greasy Fork</a> or comment on <a class="underlinedLink" href="https://steamcommunity.com/profiles/76561198132556503" target="_blank">Steam profile</a>(I always miss the chat message as getting command through chat by asf) for feedback.</p><p>Close this WEBPAGE when you want to stop crafting!</p><p>You can set intervals and blacklist badges in setting.</p><p><b style=color:#fff>Calculation mode:</b> Scan and calculate max badges you can craft first and you can regulating the number of card sets for specified bagdes. Then craft.</p><p><b style=color:#fff>Rapidly mode:</b> Show you the setting of blacklist. Crafting immediately after you confirm it. It will use up ALL your available gamecard sets for crafting badges <font style=color:#fff>except</font> the games whose APPID is in the blacklist.</p><p><a class="underlinedLink" href="https://raw.githubusercontent.com/qiaohs/Steam-Badges-Cafter/master/res/steam_crafter_7.gif" target="_blank">Demo1</a>　<a class="underlinedLink" href="https://raw.githubusercontent.com/qiaohs/Steam-Badges-Cafter/master/res/steam_crafter_5.gif" target="_blank">Demo2</a></p>';
         text.button1 = "Calculate how many badges you can craft in this page before craft";
         text.buttonr1 = "Craft <b>now</b> rapidly!";
         text.button2 = "Start Crafting!";
@@ -475,6 +557,7 @@ font.level_up {
         text.confirm = 'Confirm';
         text.cancel = 'Cancel';
         text.blacklist = 'Blacklist';
+        text.calculator_title='Level Calculator(<font style="color:#fff">5 numbers are all replaceable</font>)';
     }
 
     $J('body').prepend(`
@@ -488,7 +571,21 @@ font.level_up {
 	</div>
 	<div class="newmodal_content_border" style="background: #1d1d1d;height: 90%; overflow-y:auto;">
 		<div class="newmodal_content" style="color: #c4c6c7;">
-			<div class="craft_title" style="  font-size:16px;padding:10px 0">${text.notice}</div>
+			<div class="craft_title" style="  font-size:16px">${text.notice}
+				<fieldset class="calculator">
+					<legend>${text.calculator_title}</legend>
+					<div id="lvl01">
+						${iconin_raw(lv01)}<span class="levelnumber"><input class="_xp" min="0" value="${cur_xp}">XP</span>
+					</div>
+					<div class="_m">
+						<span style="margin: 0 40px 0 20px;position: relative; top: 10px;">→</span><span id="lvdiff"><b>+</b><input min="0" value="${cc(lv02)-cur_xp}">XP</span><span style="margin: 0px 0px 0 40px;position: relative; top: 10px;">→</span>
+					</div>
+					<div id="lvl02">
+						${iconin_raw(lv02)}<span class="levelnumber"><input class="_xp" min="0" value="${cc(lv02)}">XP</span>
+					</div>
+				</fieldset>
+
+			</div>
 			<div class="setting_list" style="display:none;font-size: 17px;">
 				<p class="setting_title">${text.setting_title}</p>
 				<p><font class="config_name">${text.cap_level} = </font>
@@ -965,6 +1062,14 @@ font.level_up {
 		}
 	}
 
+	function c_icon(jq,tar_lv){
+		if(tar_lv<100){
+			jq.attr('class','friendPlayerLevel lvl_'+Math.floor((tar_lv%100)/10)*10);
+		}else{
+			jq.attr('class','friendPlayerLevel lvl_'+Math.floor(tar_lv/100)*100+' lvl_plus_'+Math.floor((tar_lv%100)/10)*10);
+		}
+	}
+
 	function icon_raw(tar_lv){
 		if(tar_lv<100){
 			return '<span class="friendPlayerLevel lvl_'+Math.floor((tar_lv%100)/10)*10+'"><span class="friendPlayerLevelNum">'+tar_lv+'</span></span>';
@@ -972,5 +1077,86 @@ font.level_up {
 			return '<span class="friendPlayerLevel lvl_'+Math.floor(tar_lv/100)*100+' lvl_plus_'+Math.floor((tar_lv%100)/10)*10+'"><span class="friendPlayerLevelNum">'+tar_lv+'</span></span>';
 		}
 	}
+
+	function iconin(jq,tar_lv){
+		if(tar_lv<100){
+			jq.prop("outerHTML",'<span class="friendPlayerLevel lvl_'+Math.floor((tar_lv%100)/10)*10+'"><span class="friendPlayerLevelNum"><input class="friendPlayerLevelNum _level" max="9999" min="0" value="'+tar_lv+'"></span></span>');
+		}else{
+			jq.prop("outerHTML",'<span class="friendPlayerLevel lvl_'+Math.floor(tar_lv/100)*100+' lvl_plus_'+Math.floor((tar_lv%100)/10)*10+'"><span class="friendPlayerLevelNum"><input class="friendPlayerLevelNum _level" max="9999" min="0" value="'+tar_lv+'"></span></span>');
+		}
+	}
+
+	function iconin_raw(tar_lv){
+		if(tar_lv<100){
+			return '<span class="friendPlayerLevel lvl_'+Math.floor((tar_lv%100)/10)*10+'"><span class="friendPlayerLevelNum"><input class="friendPlayerLevelNum _level" max="9999" min="0" value="'+tar_lv+'"></span></span>';
+		}else{
+			return '<span class="friendPlayerLevel lvl_'+Math.floor(tar_lv/100)*100+' lvl_plus_'+Math.floor((tar_lv%100)/10)*10+'"><span class="friendPlayerLevelNum"><input class="friendPlayerLevelNum _level" max="9999" min="0" value="'+tar_lv+'"></span></span>';
+		}
+	}
+
+	function ani(jq){
+		jq.addClass('rubberBand animated infinite');
+		setTimeout(function(){jq.removeClass('rubberBand animated infinite');},700);
+	}
+
+	$J('#lvdiff input').on('input propertychange',function(){
+		var add_xp = $J('#lvdiff input').val()*1;
+		var xp01 = $J('#lvl01 input._xp').val()*1;
+		var xp02 = xp01 + add_xp;
+		var lv02 = ivscc(xp02);
+		$J('#lvl02 input._xp').val(xp02);
+		iconin($J('#lvl02 span.friendPlayerLevel'),lv02);
+		ani($J('#lvl02 span.friendPlayerLevel'));
+	});
+
+	$J('#lvl01 input._xp').on('input propertychange',function(){
+		var add_xp = $J('#lvdiff input').val()*1;
+		var xp01 = $J('#lvl01 input._xp').val()*1;
+		var xp02 = xp01 + add_xp;
+		var lv01 = ivscc(xp01);
+		var lv02 = ivscc(xp02);
+		$J('#lvl02 input._xp').val(xp02);
+		iconin($J('#lvl01 span.friendPlayerLevel'),lv01);
+		iconin($J('#lvl02 span.friendPlayerLevel'),lv02);
+		ani($J('#lvl01 span.friendPlayerLevel'));
+		ani($J('#lvl02 span.friendPlayerLevel'));
+	});
+
+	$J('.calculator').on('input propertychange','#lvl01 input._level',function(){
+		var lv01 = $J('#lvl01 input._level').val()*1;
+		var xp01 = cc(lv01);
+		var add_xp = $J('#lvdiff input').val()*1;
+		var xp02 = xp01 + add_xp;
+		var lv02 = ivscc(xp02);
+		$J('#lvl01 input._xp').val(xp01);
+		$J('#lvl02 input._xp').val(xp02);
+		c_icon($J('#lvl01 span.friendPlayerLevel'),lv01);
+		iconin($J('#lvl02 span.friendPlayerLevel'),lv02);
+		ani($J('#lvl01 span.friendPlayerLevel'));
+		ani($J('#lvl02 span.friendPlayerLevel'));
+	});
+
+	$J('#lvl02 input._xp').on('input propertychange',function(){
+		var xp01 = $J('#lvl01 input._xp').val()*1;
+		var xp02 = $J('#lvl02 input._xp').val()*1;
+		var add_xp = xp02 - xp01;
+		var lv02 = ivscc(xp02);
+		$J('#lvdiff input').val(add_xp);
+		iconin($J('#lvl02 span.friendPlayerLevel'),lv02);
+		ani($J('#lvdiff'));
+		ani($J('#lvl02 span.friendPlayerLevel'));
+	});
+
+	$J('.calculator').on('input propertychange','#lvl02 input._level',function(){
+		var lv02 = $J('#lvl02 input._level').val()*1;
+		var xp01 = $J('#lvl01 input._xp').val()*1;
+		var xp02 = cc(lv02);
+		var add_xp = xp02 - xp01;
+		$J('#lvdiff input').val(add_xp);
+		$J('#lvl02 input._xp').val(xp02);
+		c_icon($J('#lvl02 span.friendPlayerLevel'),lv02);
+		ani($J('#lvdiff'));
+		ani($J('#lvl02 span.friendPlayerLevel'));
+	});
 
 })();
