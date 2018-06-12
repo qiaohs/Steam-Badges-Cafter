@@ -2,7 +2,7 @@
 // @name			Steam Auto Mass Craft Cards Badges in Bulk
 // @name:zh-CN			Steam一键批量合卡合徽章
 // @name:zh-TW			Steam一鍵批量合卡合徽章
-// @version	 		1.5
+// @version	 		1.6
 // @description			(Steam Auto Mass Craft Trading Cards Badges in Bulk) It will automatically use up your gamecard sets for crafting badges. You can control the which card sets and how many sets to craft by using it.
 // @description:zh-CN		这是一个自动合卡插件，可以指定徽章合成的数量和种类
 // @description:zh-TW		這是一個自動合卡挿件，可以指定徽章合成的數量和種類
@@ -20,6 +20,7 @@ var		sales=["245070","762800"],//Appid for sales cards
     timer_craft = GM_getValue("timer_craft", 500),
     timer_scan = GM_getValue("timer_scan", 1000),
     config_cap_level = GM_getValue("config_cap_level", 0),
+    threads = GM_getValue("threads", 3),
     config_blacklist = GM_getValue("config_blacklist", '');
 (function() {
     'use strict';
@@ -515,6 +516,8 @@ span.levelnumber {
         text.timer_scan = '扫描时间';
         text.timer_scan_d = '(仅针对计算模式有效，计算中扫描每个徽章页面的时间间隔(单位毫秒)，默认为1000，请不要设置的过小)';
         text.timer_craft = '合成时间间隔';
+        text.threads = '线程数';
+        text.threads_d = '仅针对极速模式。默认3线程，越大合卡越快。3线程即相当于开三个1线程同时合卡。';
         text.timer_craft_d = '(仅针对计算模式有效，计算过后合成徽章的时间间隔(单位毫秒)，默认为500，请不要设置的过小)';
         text.blacklist = '黑名单';
         text.blacklist_d = '(将游戏的APPID填入，用逗号分隔，则该游戏的普通/闪亮徽章在任何模式下都不会合成。写法形如 <i style="color: #e0f170;">550,322310,730</i>)';
@@ -527,7 +530,7 @@ span.levelnumber {
     } else {
         text.start = "Craft Badges in Bulk";
         text.title = "Craft Badges in Bulk";
-        text.notice = '<p><a class="underlinedLink" href="https://github.com/qiaohs/Steam-Auto-Mass-Craft-Cards-Badges-in-Bulk" target="_blank">Github</a>、<a class="underlinedLink" href="https://greasyfork.org/en/scripts/36393" target="_blank">Greasy Fork</a> or comment on <a class="underlinedLink" href="https://steamcommunity.com/profiles/76561198132556503" target="_blank">Steam profile</a>(I always miss the chat message as getting command through chat by asf) for feedback.</p><p>Close this WEBPAGE when you want to stop crafting!</p><p>You can set intervals and blacklist badges in setting.</p><p><b style=color:#fff>Calculation mode:</b> Scan and calculate max badges you can craft first and you can regulating the number of card sets for specified bagdes. Then craft.</p><p><b style=color:#fff>Rapidly mode:</b> Show you the setting of blacklist. Crafting immediately after you confirm it. It will use up ALL your available gamecard sets for crafting badges <font style=color:#fff>except</font> the games whose APPID is in the blacklist.</p><p><a class="underlinedLink" href="https://raw.githubusercontent.com/qiaohs/Steam-Badges-Cafter/master/res/steam_crafter_7.gif" target="_blank">Demo1</a>　<a class="underlinedLink" href="https://raw.githubusercontent.com/qiaohs/Steam-Badges-Cafter/master/res/steam_crafter_5.gif" target="_blank">Demo2</a></p>';
+        text.notice = '<p><a class="underlinedLink" href="https://github.com/qiaohs/Steam-Auto-Mass-Craft-Cards-Badges-in-Bulk" target="_blank">Github</a>、<a class="underlinedLink" href="https://greasyfork.org/en/scripts/36393" target="_blank">Greasy Fork</a> or comment on <a class="underlinedLink" href="https://steamcommunity.com/profiles/76561198132556503" target="_blank">Steam profile</a>(I always miss the chat message as getting command through chat by asf) for feedback.</p><p>Close this WEBPAGE when you want to stop crafting!</p><p>You can set intervals and blacklist badges in setting.</p><p><b style=color:#fff>Calculation mode:</b> Scan and calculate max badges you can craft first and you can regulating the number of card sets for specified bagdes. Then craft.</p><p><b style=color:#fff>Rapid mode:</b> Show you the setting of blacklist. Crafting immediately after you confirm it. It will use up ALL your available gamecard sets for crafting badges <font style=color:#fff>except</font> the games whose APPID is in the blacklist.</p><p><a class="underlinedLink" href="https://raw.githubusercontent.com/qiaohs/Steam-Badges-Cafter/master/res/steam_crafter_7.gif" target="_blank">Demo1</a>　<a class="underlinedLink" href="https://raw.githubusercontent.com/qiaohs/Steam-Badges-Cafter/master/res/steam_crafter_5.gif" target="_blank">Demo2</a></p>';
         text.button1 = "Calculate how many badges you can craft in this page before craft";
         text.buttonr1 = "Craft <b>now</b> rapidly!";
         text.button2 = "Start Crafting!";
@@ -549,7 +552,9 @@ span.levelnumber {
         text.timer_scan = 'Scan Timer';
         text.timer_scan_d = '(The interval between badges when calculating. number type with default value of 1000(ms). Unless you have a reason to edit this property, you should keep it at default.)';
         text.timer_craft = 'Craft Timer';
-        text.timer_craft_d = '(The interval between cards sets crafting. number type with default value of 500(ms). Unless you have a reason to edit this property, you should keep it at default. Only for calculation mode.)';
+        text.timer_craft_d = '(The interval between cards sets crafting. number type with default value of 500(ms). Unless you have a reason to edit this property, you should keep it at default. <font style=color:#fff>Only for calculation mode.</font>)';
+        text.threads = 'Number of Threads';
+        text.threads_d = '<font style=color:#fff>Only for rapid mode</font>. number type with default value of 3. Setting to bigger values makes crafting faster. A crafting in rapid mode with 3 threads is equal to 3 crafting in rapid mode with 1 threads simultaneously.';
         text.blacklist_d = '(The cards whose APPID is in the blacklist will not being used for crafting in any mode. Separated by commas, like <i style="color: #e0f170;">550,322310,730</i>)';
         text.attention_title = 'Attention!</font><br>Please confirm that you are going to use up ALL your available gamecard sets for crafting badges. ';
         text.attention_title2 = 'As there is no APPID in your blacklist(you can add some in setting)';
@@ -594,6 +599,8 @@ span.levelnumber {
 					<input step="100" class="property timer_scan" value="${timer_scan}" type="number" min="500">${text.timer_scan_d}</p>
 				<p><font class="config_name">${text.timer_craft} = </font>
 					<input step="100" value="${timer_craft}" type="number" min="200" class="property timer_craft">${text.timer_craft_d}</p>
+				<p><font class="config_name">${text.threads} = </font>
+					<input value="${threads}" type="number" min="1" max="10" class="property threads">${text.threads_d}</p>
 				<p><font class="config_name" style=" position: relative; top: -10px; ">${text.blacklist}: </font>
 					<textarea class="property config_blacklist">${config_blacklist}</textarea>
 					<br>${text.blacklist_d}</p>
@@ -951,7 +958,7 @@ span.levelnumber {
         });
 		var cur_lv = o_tar_lv = tar_lv = ivscc(cur_xp);
         $J('#start').before('<p class="before_c" style="margin: 4px 0 15px 0;text-align: center; font-size: 18px; color: #fff;">Crafted: <font class="sum_crafted" style="font-size: 22px;">0</font> sets <font class="sum_xp" style="font-size: 20px;color: #ffc902;"></font><font class="level_up"> [ '+icon_raw(cur_lv)+' <font class="target_level">&gt;</font> <font class="target_level_icon">'+icon_raw(tar_lv)+'</font> ]</font></p>');
-        rapid_post();
+        for(var a=0;a<threads;a++){rapid_post();}
     }
     var sum_crafted_r=0;
     function rapid_post(){
@@ -1025,10 +1032,12 @@ span.levelnumber {
         GM_setValue("timer_scan", $J("input.timer_scan").val());
         GM_setValue("timer_craft", $J("input.timer_craft").val());
         GM_setValue("config_blacklist", $J("textarea.config_blacklist").val());
+        GM_setValue("threads", $J("input.threads").val());
         config_cap_level=$J("input.config_cap_level").val();
         timer_scan=$J("input.timer_scan").val();
         timer_craft=$J("input.timer_craft").val();
         config_blacklist=$J("textarea.config_blacklist").val();
+        threads=$J("input.threads").val();
         blacklist = eval('['+config_blacklist.replace(/[^0-9,]/g,'')+']');
     }
 
