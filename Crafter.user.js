@@ -16,7 +16,7 @@
 // @namespace 			https://greasyfork.org/users/155548
 // @namespace 			https://steamcommunity.com/profiles/76561198132556503
 // ==/UserScript==
-var		sales=["245070","762800"],//Appid for sales cards
+var		sales=["245070","762800","876740"],//Appid for sales cards
     timer_craft = GM_getValue("timer_craft", 500),
     timer_scan = GM_getValue("timer_scan", 1000),
     config_cap_level = GM_getValue("config_cap_level", 0),
