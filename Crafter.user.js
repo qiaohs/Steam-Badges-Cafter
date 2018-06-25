@@ -2,7 +2,7 @@
 // @name			Steam Auto Mass Craft Cards Badges in Bulk
 // @name:zh-CN			Steam一键批量合卡合徽章
 // @name:zh-TW			Steam一鍵批量合卡合徽章
-// @version	 		1.7
+// @version	 		1.8
 // @description			(Steam Auto Mass Craft Trading Cards Badges in Bulk) It will automatically use up your gamecard sets for crafting badges. You can control the which card sets and how many sets to craft by using it.
 // @description:zh-CN		这是一个自动合卡插件，可以指定徽章合成的数量和种类
 // @description:zh-TW		這是一個自動合卡挿件，可以指定徽章合成的數量和種類
@@ -48,7 +48,7 @@ var		sales=["245070","762800","876740"],//Appid for sales cards
 }
 
 .craft_list p input {
-	width: 36px;
+	width: 46px;
 	height: 13px;
 	background-color: #152f4a;
 	border: 1px #fff solid;
@@ -494,7 +494,7 @@ span.levelnumber {
     if (lan == "schinese" || lan == "tchinese") {
         text.start = "批量合成徽章";
         text.title = "批量合卡";
-        text.notice = '<p>这是一个自动合卡插件，可以指定徽章合成的数量和种类。</p><p>可在<a class="underlinedLink" href="https://steamcn.com/t339531-1-1" target="_blank">SteamCN</a>、<a class="underlinedLink" href="https://github.com/qiaohs/Steam-Auto-Mass-Craft-Cards-Badges-in-Bulk" target="_blank">Github</a>、<a class="underlinedLink" href="https://greasyfork.org/en/scripts/36393" target="_blank">Greasy Fork</a>反馈问题，也可以在我的<a class="underlinedLink" href="https://steamcommunity.com/profiles/76561198132556503" target="_blank">资料页</a>下方留言（ASF经常吞消息可能看不到私聊0.0）</p></p>可以随时关闭本标签页来停止插件的自动操作</p><p><b style=color:#fff>计算模式:</b> 先扫描出每个徽章的可合成次数，扫描完毕后可以手动调整合成数量，再通过确认进行批量合卡。</p><p><b style=color:#fff>极速模式:</b> 先显示您的黑名单设置，确认后将直接合成所有可以用来合成的徽章，<font style=color:#fff>不会使用黑名单中的游戏卡牌</font>。</p><p><a class="underlinedLink" href="https://raw.githubusercontent.com/qiaohs/Steam-Badges-Cafter/master/res/steam_crafter_7.gif" target="_blank">Demo1</a>　<a class="underlinedLink" href="https://raw.githubusercontent.com/qiaohs/Steam-Badges-Cafter/master/res/steam_crafter_5.gif" target="_blank">Demo2</a></p>';
+        text.notice = '<p>这是一个自动合卡插件，可以指定徽章合成的数量和种类。</p><p>可在<a class="underlinedLink" href="https://steamcn.com/t339531-1-1" target="_blank">SteamCN</a>、<a class="underlinedLink" href="https://steamcommunity.com/sharedfiles/filedetails/?id=1409472832" target="_blank">社区指南</a>反馈问题</p></p>可以随时关闭本标签页来停止插件的自动操作</p><p><b style=color:#fff>计算模式:</b> 先扫描出每个徽章的可合成次数，扫描完毕后可以手动调整合成数量，再通过确认进行批量合卡。</p><p><b style=color:#fff>极速模式:</b> 先显示您的黑名单设置，确认后将直接合成所有可以用来合成的徽章，<font style=color:#fff>不会使用黑名单中的游戏卡牌</font>。</p><p><a class="underlinedLink" href="https://raw.githubusercontent.com/qiaohs/Steam-Badges-Cafter/master/res/steam_crafter_7.gif" target="_blank">Demo1</a>　<a class="underlinedLink" href="https://raw.githubusercontent.com/qiaohs/Steam-Badges-Cafter/master/res/steam_crafter_5.gif" target="_blank">Demo2</a></p>';
         text.button1 = "开始统计本页可合成卡组(计算模式)";
         text.buttonr1 = "不管那么多了，跳过扫描直接合卡！(极速模式)";
         text.button2 = "确认无误后开始合卡";
@@ -530,7 +530,7 @@ span.levelnumber {
     } else {
         text.start = "Craft Badges in Bulk";
         text.title = "Craft Badges in Bulk";
-        text.notice = '<p><a class="underlinedLink" href="https://github.com/qiaohs/Steam-Auto-Mass-Craft-Cards-Badges-in-Bulk" target="_blank">Github</a>、<a class="underlinedLink" href="https://greasyfork.org/en/scripts/36393" target="_blank">Greasy Fork</a> or comment on <a class="underlinedLink" href="https://steamcommunity.com/profiles/76561198132556503" target="_blank">Steam profile</a>(I always miss the chat message as getting command through chat by asf) for feedback.</p><p>Close this WEBPAGE when you want to stop crafting!</p><p>You can set intervals and blacklist badges in setting.</p><p><b style=color:#fff>Calculation mode:</b> Scan and calculate max badges you can craft first and you can regulating the number of card sets for specified bagdes. Then craft.</p><p><b style=color:#fff>Rapid mode:</b> Show you the setting of blacklist. Crafting immediately after you confirm it. It will use up ALL your available gamecard sets for crafting badges <font style=color:#fff>except</font> the games whose APPID is in the blacklist.</p><p><a class="underlinedLink" href="https://raw.githubusercontent.com/qiaohs/Steam-Badges-Cafter/master/res/steam_crafter_7.gif" target="_blank">Demo1</a>　<a class="underlinedLink" href="https://raw.githubusercontent.com/qiaohs/Steam-Badges-Cafter/master/res/steam_crafter_5.gif" target="_blank">Demo2</a></p>';
+        text.notice = '<p>Commentting on <a class="underlinedLink" href="https://steamcommunity.com/sharedfiles/filedetails/?id=1409472832" target="_blank">Community Guide</a>(Great thanks for <a class="underlinedLink" href="https://steamcommunity.com/profiles/76561198112219279" target="_blank">Aevoa</a>!)、<a class="underlinedLink" href="https://greasyfork.org/en/scripts/36393" target="_blank">Greasy Fork</a> for feedback.</p><p>Close this WEBPAGE when you want to stop crafting!</p><p>You can set intervals and blacklist badges in setting.</p><p><b style=color:#fff>Calculation mode:</b> Scan and calculate max badges you can craft first and you can regulating the number of card sets for specified bagdes. Then craft.</p><p><b style=color:#fff>Rapid mode:</b> Show you the setting of blacklist. Crafting immediately after you confirm it. It will use up ALL your available gamecard sets for crafting badges <font style=color:#fff>except</font> the games whose APPID is in the blacklist.</p><p><a class="underlinedLink" href="https://raw.githubusercontent.com/qiaohs/Steam-Badges-Cafter/master/res/steam_crafter_7.gif" target="_blank">Demo1</a>　<a class="underlinedLink" href="https://raw.githubusercontent.com/qiaohs/Steam-Badges-Cafter/master/res/steam_crafter_5.gif" target="_blank">Demo2</a></p>';
         text.button1 = "Calculate how many badges you can craft in this page before craft";
         text.buttonr1 = "Craft <b>now</b> rapidly!";
         text.button2 = "Start Crafting!";
