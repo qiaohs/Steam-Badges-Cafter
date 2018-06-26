@@ -2,7 +2,7 @@
 // @name			Steam Auto Mass Craft Cards Badges in Bulk
 // @name:zh-CN			Steam一键批量合卡合徽章
 // @name:zh-TW			Steam一鍵批量合卡合徽章
-// @version	 		1.8
+// @version	 		1.9
 // @description			(Steam Auto Mass Craft Trading Cards Badges in Bulk) It will automatically use up your gamecard sets for crafting badges. You can control the which card sets and how many sets to craft by using it.
 // @description:zh-CN		这是一个自动合卡插件，可以指定徽章合成的数量和种类
 // @description:zh-TW		這是一個自動合卡挿件，可以指定徽章合成的數量和種類
@@ -38,6 +38,10 @@ var		sales=["245070","762800","876740"],//Appid for sales cards
 	transition: .5s
 }
 
+input.ready_to_craft.in_progress {
+	border: 1px #ffffff solid!important;
+	color: #ffffff!important;
+}
 .profile_xp_block_right:hover {
 	color: #333;
 	background: #aaa
@@ -48,7 +52,7 @@ var		sales=["245070","762800","876740"],//Appid for sales cards
 }
 
 .craft_list p input {
-	width: 46px;
+	width: 36px;
 	height: 13px;
 	background-color: #152f4a;
 	border: 1px #fff solid;
@@ -60,7 +64,14 @@ var		sales=["245070","762800","876740"],//Appid for sales cards
 	background-position-x: -46px;
 	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC4AAAAPCAYAAACbSf2kAAAACXBIWXMAAC4jAAAuIwF4pT92AAAAKUlEQVR42mOIOmPwfyhihlGHjzp81OGjDh91+KjDRx0+6vBRh486HI4BdWZJdZDgwMoAAAAASUVORK5CYII=")
 }
-
+input.ready_to_craft.sales {
+    width: 56px!important;
+    border: 2px #ff0000 solid!important;
+    color: #636363!important;
+    background-color: #fff82b!important;
+	background-position-x: -66px;
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEIAAAAPCAYAAABQkhlaAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAA7SURBVFhH7dDBDYAwEMCwK+syU2ctUpUtsD/5Z+3znmGe+ntGxIgYESNiRIyIETEiRsSIGBEjYsQ18wHlgwMk4bDMIwAAAABJRU5ErkJggg==")!important;
+}
 .cannot_craft {
 	-webkit-filter: grayscale(100%);
 	-moz-filter: grayscale(100%);
@@ -100,10 +111,6 @@ input.ready_to_craft.finished {
 	background-color: #ff0909;
 }
 
-input.ready_to_craft.in_progress {
-	border: 1px #ffffff solid!important;
-	color: #ffffff!important;
-}
 
 #start img {
 	padding-top: 0px;
@@ -659,7 +666,8 @@ span.levelnumber {
         $J('a.badge_craft_button').each(function(i) { ///if(i>1){return false;}//a.badge_craft_button//a.badge_row_overlay
             var badge_link = $J(this).attr('href'),
                 badge_level = 0,
-                count_min = 99999;
+                count_min = 99999,
+                issales='';
             setTimeout(function() {
                 $J.get(badge_link,
                        function(html) {
@@ -692,6 +700,7 @@ span.levelnumber {
                         _gappid = __appID + "b1";
                         if ($J.inArray(__appID, sales) >= 0) {
                             badge_cap_level = config_cap_level == 0 ? 99999 : config_cap_level;
+                            issales='sales';
                         } else {
                             badge_cap_level = 1;
                         }
@@ -701,13 +710,14 @@ span.levelnumber {
                         _gappid = __appID + "b0";
                         if ($J.inArray(__appID, sales) >= 0) {
                             badge_cap_level = config_cap_level == 0 ? 99999 : config_cap_level;
+                            issales='sales';
                         } else {
                             badge_cap_level = config_cap_level == 0 ? 5 : config_cap_level;
                         }
                     }
                     if($J.inArray(__appID*1, blacklist) >= 0){count_min=0;}//blacklist.include(__appID)
                     var upgrade_sets = Math.min(count_min, Math.max((badge_cap_level - badge_level),0)); ///Math.min(count_min, (badge_cap_level - badge_level));//2;
-                    $J('.craft_list').append("<p><input class='ready_to_craft' type='number' value=" + upgrade_sets + " data-appid=" + __appID + " data-border=" + _border + " data-gappid=" + _gappid + " max=" + upgrade_sets + " min='0'> " + text.list1 + " APPID:" + __appID + " " + text.list2 + " " + upgrade_sets + " " + text.list3 + " " + badge_level + " " + text.list4 + " " + gamename + "</p>");
+                    $J('.craft_list').append("<p><input class='ready_to_craft "+issales+"' type='number' value=" + upgrade_sets + " data-appid=" + __appID + " data-border=" + _border + " data-gappid=" + _gappid + " max=" + upgrade_sets + " min='0'> " + text.list1 + " APPID:" + __appID + " " + text.list2 + " " + upgrade_sets + " " + text.list3 + " " + badge_level + " " + text.list4 + " " + gamename + "</p>");
                     sum_sets += upgrade_sets;
                     sum_badges += 1;
 
@@ -806,7 +816,7 @@ span.levelnumber {
                             } else {
                                 finished_count[para] = 1;
                             }
-                            $J('input.ready_to_craft[data-gappid="' + para + '"]').css('background-position-x', 46 * (finished_count[para] / queue[i].times - 1));
+                            $J('input.ready_to_craft[data-gappid="' + para + '"]').css('background-position-x', ($J('input.ready_to_craft[data-gappid="' + para + '"]').css('width').replace(/px/ig,'')*1+10) * (finished_count[para] / queue[i].times - 1));
                         }
                     }
 
@@ -982,6 +992,7 @@ span.levelnumber {
 
             complete: function(XMLHttpRequest, status) {
                 setTimeout(function(){rapid_post();},timer_craft*0);
+                if(XMLHttpRequest.responseJSON.success!=1){queue_r.splice(0,1);}//status=='error'
             },
 
             success: function(data) {
