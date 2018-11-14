@@ -2,7 +2,7 @@
 // @name			Steam Auto Mass Craft Cards Badges in Bulk
 // @name:zh-CN			Steam一键批量合卡合徽章
 // @name:zh-TW			Steam一鍵批量合卡合徽章
-// @version	 		2.2
+// @version	 		2.21
 // @description			(Steam Auto Mass Craft Trading Cards Badges in Bulk) It will automatically use up your gamecard sets for crafting badges. You can control the which card sets and how many sets to craft by using it.
 // @description:zh-CN		这是一个自动合卡插件，可以指定徽章合成的数量和种类
 // @description:zh-TW		這是一個自動合卡挿件，可以指定徽章合成的數量和種類
@@ -491,6 +491,282 @@ span.levelnumber {
 .friendPlayerLevel.lvl_1000 input, .friendPlayerLevel.lvl_1100 input, .friendPlayerLevel.lvl_1200 input, .friendPlayerLevel.lvl_1300 input, .friendPlayerLevel.lvl_1400 input, .friendPlayerLevel.lvl_1500 input, .friendPlayerLevel.lvl_1600 input, .friendPlayerLevel.lvl_1700 input, .friendPlayerLevel.lvl_1800 input, .friendPlayerLevel.lvl_1900 input, .friendPlayerLevel.lvl_2000 input, .friendPlayerLevel.lvl_2100 input, .friendPlayerLevel.lvl_2200 input, .friendPlayerLevel.lvl_2300 input, .friendPlayerLevel.lvl_2400 input, .friendPlayerLevel.lvl_2500 input, .friendPlayerLevel.lvl_2600 input, .friendPlayerLevel.lvl_2700 input, .friendPlayerLevel.lvl_2800 input, .friendPlayerLevel.lvl_2900 input, .friendPlayerLevel.lvl_3000 input {
     width: 32px;
 }
+/* -------------------------------------------------------------------
+  Microtip
+
+  Modern, lightweight css-only tooltips
+  Just 1kb minified and gzipped
+
+  @author Ghosh
+  @package Microtip
+
+----------------------------------------------------------------------
+  1. Base Styles
+  2. Direction Modifiers
+  3. Position Modifiers
+--------------------------------------------------------------------*/
+
+
+/* ------------------------------------------------
+  [1] Base Styles
+-------------------------------------------------*/
+
+[aria-label][role~="tooltip"] {
+  position: relative;
+}
+
+[aria-label][role~="tooltip"]::before,
+[aria-label][role~="tooltip"]::after {
+  transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  will-change: transform;
+  opacity: 0;
+  pointer-events: none;
+  transition: all var(--microtip-transition-duration, .18s) var(--microtip-transition-easing, ease-in-out) var(--microtip-transition-delay, 0s);
+  position: absolute;
+  box-sizing: border-box;
+  z-index: 10;
+  transform-origin: top;
+}
+
+[aria-label][role~="tooltip"]::before {
+  background-size: 100% auto !important;
+  content: "";
+}
+
+[aria-label][role~="tooltip"]::after {
+  background: rgba(17, 17, 17, .9);
+  border-radius: 4px;
+  color: #ffffff;
+  content: attr(aria-label);
+  font-size: var(--microtip-font-size, 13px);
+  font-weight: var(--microtip-font-weight, normal);
+  text-transform: var(--microtip-text-transform, none);
+  padding: .5em 1em;
+  white-space: nowrap;
+  box-sizing: content-box;
+  white-space: normal;width:500px;
+}
+
+[aria-label][role~="tooltip"]:hover::before,
+[aria-label][role~="tooltip"]:hover::after,
+[aria-label][role~="tooltip"]:focus::before,
+[aria-label][role~="tooltip"]:focus::after {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+
+
+/* ------------------------------------------------
+  [2] Position Modifiers
+-------------------------------------------------*/
+
+[role~="tooltip"][data-microtip-position|="top"]::before {
+  background: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2236px%22%20height%3D%2212px%22%3E%3Cpath%20fill%3D%22rgba%2817,%2017,%2017,%200.9%29%22%20transform%3D%22rotate%280%29%22%20d%3D%22M2.658,0.000%20C-13.615,0.000%2050.938,0.000%2034.662,0.000%20C28.662,0.000%2023.035,12.002%2018.660,12.002%20C14.285,12.002%208.594,0.000%202.658,0.000%20Z%22/%3E%3C/svg%3E") no-repeat;
+  height: 6px;
+  width: 18px;
+  margin-bottom: 5px;
+}
+
+[role~="tooltip"][data-microtip-position|="top"]::after {
+  margin-bottom: 11px;
+}
+
+[role~="tooltip"][data-microtip-position|="top"]::before {
+  transform: translate3d(-50%, 0, 0);
+  bottom: 100%;
+  left: 50%;
+}
+
+[role~="tooltip"][data-microtip-position|="top"]:hover::before {
+  transform: translate3d(-50%, -5px, 0);
+}
+
+[role~="tooltip"][data-microtip-position|="top"]::after {
+  transform: translate3d(-50%, 0, 0);
+  bottom: 100%;
+  left: 50%;
+}
+
+[role~="tooltip"][data-microtip-position="top"]:hover::after {
+  transform: translate3d(-50%, -5px, 0);
+}
+
+/* ------------------------------------------------
+  [2.1] Top Left
+-------------------------------------------------*/
+[role~="tooltip"][data-microtip-position="top-left"]::after {
+  transform: translate3d(calc(-100% + 16px), 0, 0);
+  bottom: 100%;
+}
+
+[role~="tooltip"][data-microtip-position="top-left"]:hover::after {
+  transform: translate3d(calc(-100% + 16px), -5px, 0);
+}
+
+
+/* ------------------------------------------------
+  [2.2] Top Right
+-------------------------------------------------*/
+[role~="tooltip"][data-microtip-position="top-right"]::after {
+  transform: translate3d(calc(0% + -16px), 0, 0);
+  bottom: 100%;
+}
+
+[role~="tooltip"][data-microtip-position="top-right"]:hover::after {
+  transform: translate3d(calc(0% + -16px), -5px, 0);
+}
+
+
+/* ------------------------------------------------
+  [2.3] Bottom
+-------------------------------------------------*/
+[role~="tooltip"][data-microtip-position|="bottom"]::before {
+  background: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2236px%22%20height%3D%2212px%22%3E%3Cpath%20fill%3D%22rgba%2817,%2017,%2017,%200.9%29%22%20transform%3D%22rotate%28180%2018%206%29%22%20d%3D%22M2.658,0.000%20C-13.615,0.000%2050.938,0.000%2034.662,0.000%20C28.662,0.000%2023.035,12.002%2018.660,12.002%20C14.285,12.002%208.594,0.000%202.658,0.000%20Z%22/%3E%3C/svg%3E") no-repeat;
+  height: 6px;
+  width: 18px;
+  margin-top: 5px;
+  margin-bottom: 0;
+}
+
+[role~="tooltip"][data-microtip-position|="bottom"]::after {
+  margin-top: 11px;
+}
+
+[role~="tooltip"][data-microtip-position|="bottom"]::before {
+  transform: translate3d(-50%, -10px, 0);
+  bottom: auto;
+  left: 50%;
+  top: 100%;
+}
+
+[role~="tooltip"][data-microtip-position|="bottom"]:hover::before {
+  transform: translate3d(-50%, 0, 0);
+}
+
+[role~="tooltip"][data-microtip-position|="bottom"]::after {
+  transform: translate3d(-50%, -10px, 0);
+  top: 100%;
+  left: 50%;
+}
+
+[role~="tooltip"][data-microtip-position="bottom"]:hover::after {
+  transform: translate3d(-50%, 0, 0);
+}
+
+
+/* ------------------------------------------------
+  [2.4] Bottom Left
+-------------------------------------------------*/
+[role~="tooltip"][data-microtip-position="bottom-left"]::after {
+  transform: translate3d(calc(-100% + 16px), -10px, 0);
+  top: 100%;
+}
+
+[role~="tooltip"][data-microtip-position="bottom-left"]:hover::after {
+  transform: translate3d(calc(-100% + 16px), 0, 0);
+}
+
+
+/* ------------------------------------------------
+  [2.5] Bottom Right
+-------------------------------------------------*/
+[role~="tooltip"][data-microtip-position="bottom-right"]::after {
+  transform: translate3d(calc(0% + -16px), -10px, 0);
+  top: 100%;
+}
+
+[role~="tooltip"][data-microtip-position="bottom-right"]:hover::after {
+  transform: translate3d(calc(0% + -16px), 0, 0);
+}
+
+
+/* ------------------------------------------------
+  [2.6] Left
+-------------------------------------------------*/
+[role~="tooltip"][data-microtip-position="left"]::before,
+[role~="tooltip"][data-microtip-position="left"]::after {
+  bottom: auto;
+  left: auto;
+  right: 100%;
+  top: 50%;
+  transform: translate3d(10px, -50%, 0);
+}
+
+[role~="tooltip"][data-microtip-position="left"]::before {
+  background: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2212px%22%20height%3D%2236px%22%3E%3Cpath%20fill%3D%22rgba%2817,%2017,%2017,%200.9%29%22%20transform%3D%22rotate%28-90%2018%2018%29%22%20d%3D%22M2.658,0.000%20C-13.615,0.000%2050.938,0.000%2034.662,0.000%20C28.662,0.000%2023.035,12.002%2018.660,12.002%20C14.285,12.002%208.594,0.000%202.658,0.000%20Z%22/%3E%3C/svg%3E") no-repeat;
+  height: 18px;
+  width: 6px;
+  margin-right: 5px;
+  margin-bottom: 0;
+}
+
+[role~="tooltip"][data-microtip-position="left"]::after {
+  margin-right: 11px;
+}
+
+[role~="tooltip"][data-microtip-position="left"]:hover::before,
+[role~="tooltip"][data-microtip-position="left"]:hover::after {
+  transform: translate3d(0, -50%, 0);
+}
+
+
+/* ------------------------------------------------
+  [2.7] Right
+-------------------------------------------------*/
+[role~="tooltip"][data-microtip-position="right"]::before,
+[role~="tooltip"][data-microtip-position="right"]::after {
+  bottom: auto;
+  left: 100%;
+  top: 50%;
+  transform: translate3d(-10px, -50%, 0);
+}
+
+[role~="tooltip"][data-microtip-position="right"]::before {
+  background: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2212px%22%20height%3D%2236px%22%3E%3Cpath%20fill%3D%22rgba%2817,%2017,%2017,%200.9%29%22%20transform%3D%22rotate%2890%206%206%29%22%20d%3D%22M2.658,0.000%20C-13.615,0.000%2050.938,0.000%2034.662,0.000%20C28.662,0.000%2023.035,12.002%2018.660,12.002%20C14.285,12.002%208.594,0.000%202.658,0.000%20Z%22/%3E%3C/svg%3E") no-repeat;
+  height: 18px;
+  width: 6px;
+  margin-bottom: 0;
+  margin-left: 5px;
+}
+
+[role~="tooltip"][data-microtip-position="right"]::after {
+  margin-left: 11px;
+}
+
+[role~="tooltip"][data-microtip-position="right"]:hover::before,
+[role~="tooltip"][data-microtip-position="right"]:hover::after {
+  transform: translate3d(0, -50%, 0);
+}
+
+/* ------------------------------------------------
+  [3] Size
+-------------------------------------------------*/
+[role~="tooltip"][data-microtip-size="small"]::after {
+  white-space: initial;
+  width: 80px;
+}
+
+[role~="tooltip"][data-microtip-size="medium"]::after {
+  white-space: initial;
+  width: 150px;
+}
+
+[role~="tooltip"][data-microtip-size="large"]::after {
+  white-space: initial;
+  width: 260px;
+}
+font.mnotice {
+    cursor: help;
+    margin-left: 10px;
+    font-size: 17px;
+    background: rgba(255,255,255,.6);
+    padding: 5px;
+    border-radius: 50%;
+}
+
 `);
     var _border, g_sessionID, badge_cap_level, __appID, _gappid,blacklist=[],tar_lv,o_tar_lv;
 	var cur_xp = $J('.profile_xp_block_xp').html().replace(/[^0-9]/g,'')*1;
@@ -534,6 +810,7 @@ span.levelnumber {
         text.confirm = '确认';
         text.cancel = '取消';
         text.calculator_title='等级计算器(<font style="color:#fff">5个数字均可修改</font>)';
+        text.mnotice='由于Steam服务器偶尔返回合卡结果传输出错输出为空，对于数量巨大的合成可能会出现合计结果较小，若对数量有精确要求请在合成之后刷新页面核对数量';
     } else {
         text.start = "Craft Badges in Bulk";
         text.title = "Craft Badges in Bulk";
@@ -570,6 +847,7 @@ span.levelnumber {
         text.cancel = 'Cancel';
         text.blacklist = 'Blacklist';
         text.calculator_title='Level Calculator(<font style="color:#fff">5 numbers are all replaceable</font>)';
+        text.mnotice='Due to the occasional bad return(but crafted successfully) of the Steam server, which usually results in a slightly small total result when you craft a large number of badges. If you need the accurate sum of crafted sets, please refresh the page and calculate it manually after crafting.';
     }
 
     $J('body').prepend(`
@@ -676,11 +954,15 @@ span.levelnumber {
                     }
                     var gamename = $J(html).find('.badge_title').text();
                     var _badge = $J(html).find('.badge_current .badge_info_description>div:eq(1)');
+                    var cards_sum=0,cards_num=0,after_stm;
 
                     $J(html).find('.badge_detail_tasks>.badge_card_set_card').each(function() {
                         var count = $J(this).find('.badge_card_set_text_qty').text();
+                        cards_num  += 1;
+
                         if (count) {
                             count = parseInt(count.replace(/[()]/g, ''));
+                            cards_sum += count;
                             if (count < count_min) {
                                 count_min = count;
                             }
@@ -688,6 +970,8 @@ span.levelnumber {
                             count_min = 0;
                         }
                     });
+
+                    after_stm = (cards_sum/cards_num);
 
                     if (_badge.length) {
                         badge_level = parseInt(_badge.text().match(/\d+/));
@@ -717,7 +1001,14 @@ span.levelnumber {
                     }
                     if($J.inArray(__appID*1, blacklist) >= 0){count_min=0;}//blacklist.include(__appID)
                     var upgrade_sets = Math.min(count_min, Math.max((badge_cap_level - badge_level),0)); ///Math.min(count_min, (badge_cap_level - badge_level));//2;
-                    $J('.craft_list').append("<p><input class='ready_to_craft "+issales+"' type='number' value=" + upgrade_sets + " data-appid=" + __appID + " data-border=" + _border + " data-gappid=" + _gappid + " max=" + upgrade_sets + " min='0'> " + text.list1 + " APPID:" + __appID + " " + text.list2 + " " + upgrade_sets + " " + text.list3 + " " + badge_level + " " + text.list4 + " " + gamename + "</p>");
+
+                    if(after_stm>count_min){
+                        if(count_min<Math.max((badge_cap_level - badge_level),0)){after_stm="<font style='color:red;cursor:help' aria-label='"+count_min+" sets are ready to craft, about "+(after_stm-count_min).toFixed(1)+" sets will be full after trading' role='tooltip' data-microtip-position='top-left' title='"+count_min+" sets are ready to craft, about "+(after_stm-count_min).toFixed(1)+" sets will be full after trading'>("+count_min+'+'+(after_stm-count_min).toFixed(1)+")</font>";}
+                        else{after_stm="<font style='color:orange;cursor:help' aria-label='"+count_min+" sets are ready to craft, about "+(after_stm-count_min).toFixed(1)+" sets will be full after trading. But you can only craft "+(badge_cap_level - badge_level)+" more sets.' role='tooltip' data-microtip-position='top-left' title='"+count_min+" sets are ready to craft, about "+(after_stm-count_min).toFixed(1)+" sets will be full after trading. But you can only craft "+(badge_cap_level - badge_level)+" more sets.'>("+count_min+'+'+(after_stm-count_min).toFixed(1)+")</font>";}
+                    }else{after_stm='';}
+
+
+                    $J('.craft_list').append("<p><input class='ready_to_craft "+issales+"' type='number' value=" + upgrade_sets + " data-appid=" + __appID + " data-border=" + _border + " data-gappid=" + _gappid + " max=" + upgrade_sets + " min='0'> " + text.list1 + " APPID:" + __appID + " " + text.list2 + " " + upgrade_sets + " " + text.list3 + " " + badge_level + " " + text.list4 + " " + gamename + after_stm + "</p>");
                     sum_sets += upgrade_sets;
                     sum_badges += 1;
 
@@ -758,7 +1049,7 @@ span.levelnumber {
 
         $J('#start').html('<img src="https://steamcommunity-a.akamaihd.net/public/images/login/throbber.gif">');
         $J('.window_title').html(text.crafting);
-        $J('.before_c').html('Success: <font class="sum_crafted" style="font-size: 22px;">0</font> <font class="sum_xp" style="font-size: 20px;color: #ffc902;"></font>');
+        $J('.before_c').html('Success: <font class="sum_crafted" style="font-size: 22px;">0</font> <font class="sum_xp" style="font-size: 20px;color: #ffc902;"></font><font class="mnotice" title="'+text.mnotice+'" aria-label="'+text.mnotice+'" role="tooltip" data-microtip-position="top">ℹ️</font>');
         $J('.ready_to_craft').each(function() {
             if ($J(this).val() > 0) {
                 for (var i = 0; i < $J(this).val(); i++) {
@@ -776,6 +1067,7 @@ span.levelnumber {
                 var border = queue[i].border,
                     appid = queue[i].appid,
                     para = appid + "b" + border;
+				///*
                 $J.ajax({
                     type: 'post',
                     url: g_strProfileURL + '/ajaxcraftbadge',
@@ -787,7 +1079,7 @@ span.levelnumber {
                     },
                     timeout: 8000,
 
-                    complete: function(XMLHttpRequest, status) {
+                    complete: function(XMLHttpRequest, status) {//*/
                         if (i == (queue.length - 1)) {
                             $J('#start').html('<font style=" font-size: 25px; position: relative; top: 0; ">' + text.crafted + '</font>');
                             $J('.window_title').html(text.crafted);
@@ -803,10 +1095,11 @@ span.levelnumber {
                         if (all_count[para] == queue[i].times) {
                             $J('input.ready_to_craft[data-gappid="' + para + '"]').addClass('finished');
                         }
-                    },
+                   ///*
+                   },
 
                     success: function(data) {
-                        if (data.success == 1) {
+                        if (data.success == 1) {//*/
                             sum_crafted += 1;
                             $J('.sum_crafted').text(sum_crafted);
                             $J('.sum_percent').text(GetPercent(sum_crafted, sum_sets));
@@ -817,10 +1110,11 @@ span.levelnumber {
                                 finished_count[para] = 1;
                             }
                             $J('input.ready_to_craft[data-gappid="' + para + '"]').css('background-position-x', ($J('input.ready_to_craft[data-gappid="' + para + '"]').css('width').replace(/px/ig,'')*1+10) * (finished_count[para] / queue[i].times - 1));
+                        ///*
                         }
                     }
 
-                });
+                });//*/
             },
                        timer_craft * i);
         });
@@ -968,7 +1262,7 @@ span.levelnumber {
             if($J.inArray(__appID*1,blacklist)<0&&badge_cap_level>0){queue_r.push({appid:__appID,border:_border,gappid:_gappid,badge_cap_level:badge_cap_level*1});}//blacklist.include(__appID)
         });
 		var cur_lv = o_tar_lv = tar_lv = ivscc(cur_xp);
-        $J('#start').before('<p class="before_c" style="margin: 4px 0 15px 0;text-align: center; font-size: 18px; color: #fff;">Crafted: <font class="sum_crafted" style="font-size: 22px;">0</font> sets <font class="sum_xp" style="font-size: 20px;color: #ffc902;"></font><font class="level_up"> [ '+icon_raw(cur_lv)+' <font class="target_level">&gt;</font> <font class="target_level_icon">'+icon_raw(tar_lv)+'</font> ]</font></p>');
+        $J('#start').before('<p class="before_c" style="margin: 4px 0 15px 0;text-align: center; font-size: 18px; color: #fff;">Crafted: <font class="sum_crafted" style="font-size: 22px;">0</font> sets <font class="sum_xp" style="font-size: 20px;color: #ffc902;"></font><font class="level_up"> [ '+icon_raw(cur_lv)+' <font class="target_level">&gt;</font> <font class="target_level_icon">'+icon_raw(tar_lv)+'</font> ]</font><font class="mnotice" title="'+text.mnotice+'" aria-label="'+text.mnotice+'" role="tooltip" data-microtip-position="top">ℹ️</font></p>');
         for(var a=0;a<threads;a++){rapid_post();}
     }
     var sum_crafted_r=0;
@@ -980,6 +1274,7 @@ span.levelnumber {
         var border = queue_r[0].border,
             appid = queue_r[0].appid,
             gappid = queue_r[0].gappid;
+        ///*
         $J.ajax({
             type: 'post',
             url: g_strProfileURL + '/ajaxcraftbadge',
@@ -991,13 +1286,14 @@ span.levelnumber {
             },
             timeout: 8000,
 
-            complete: function(XMLHttpRequest, status) {
+            complete: function(XMLHttpRequest, status) {//*/
                 setTimeout(function(){rapid_post();},timer_craft*0);
                 if(queue_r.length>0){if(XMLHttpRequest.responseJSON.success!=1&&queue_r[0].gappid==gappid){queue_r.splice(0,1);}}//status=='error'
+            ///*
             },
 
             success: function(data) {
-                if (data.success == 1) {
+                if (data.success == 1) {//*/
                     sum_crafted_r += 1;
                     $J('.sum_crafted').text(sum_crafted_r);
                     $J('.sum_xp').text('+' + (sum_crafted_r * 100) + 'XP');
@@ -1016,10 +1312,10 @@ span.levelnumber {
                         $J('.craft_list').append("Crafted <font style='color:#fff'data-app='"+appid+'_'+border+"'>1</font> sets for "+gappid+" badge<br>");
                     }
 
-
+                ///*
                 }//else{queue_r.splice(0,1);}
             }
-        });
+        });//*/
 
     }
 
