@@ -2,7 +2,7 @@
 // @name			Steam Auto Mass Craft Cards Badges in Bulk
 // @name:zh-CN			Steam一键批量合卡合徽章
 // @name:zh-TW			Steam一鍵批量合卡合徽章
-// @version	 		2.21
+// @version	 		2.22
 // @description			(Steam Auto Mass Craft Trading Cards Badges in Bulk) It will automatically use up your gamecard sets for crafting badges. You can control the which card sets and how many sets to craft by using it.
 // @description:zh-CN		这是一个自动合卡插件，可以指定徽章合成的数量和种类
 // @description:zh-TW		這是一個自動合卡挿件，可以指定徽章合成的數量和種類
@@ -1008,7 +1008,7 @@ font.mnotice {
                     }else{after_stm='';}
 
 
-                    $J('.craft_list').append("<p><input class='ready_to_craft "+issales+"' type='number' value=" + upgrade_sets + " data-appid=" + __appID + " data-border=" + _border + " data-gappid=" + _gappid + " max=" + upgrade_sets + " min='0'> " + text.list1 + " APPID:" + __appID + " " + text.list2 + " " + upgrade_sets + " " + text.list3 + " " + badge_level + " " + text.list4 + " " + gamename + after_stm + "</p>");
+                    $J('.craft_list').append("<p><input class='ready_to_craft "+issales+"' type='number' value=" + upgrade_sets + " data-appid=" + __appID + " data-border=" + _border + " data-gappid=" + _gappid + " max=" + upgrade_sets + " min='0'> " + text.list1 + " APPID:<a href='/my/gamecards/"+__appID+"?border="+_border+"' target=_blank>" + __appID + "</a> " + text.list2 + " " + upgrade_sets + " " + text.list3 + " " + badge_level + " " + text.list4 + " " + gamename + after_stm + "</p>");
                     sum_sets += upgrade_sets;
                     sum_badges += 1;
 
@@ -1309,7 +1309,7 @@ font.mnotice {
                     if($J('font[data-app='+appid+'_'+border+']').length>0){
                         $J('font[data-app='+appid+'_'+border+']').html($J('font[data-app='+appid+'_'+border+']').html()*1+1)
                     }else{
-                        $J('.craft_list').append("Crafted <font style='color:#fff'data-app='"+appid+'_'+border+"'>1</font> sets for "+gappid+" badge<br>");
+                        $J('.craft_list').append("Crafted <font style='color:#fff'data-app='"+appid+'_'+border+"'>1</font> sets for <a href='/my/gamecards/"+appID+"?border="+border+"' target=_blank>"+gappid+"</a> badge<br>");
                     }
 
                 ///*
