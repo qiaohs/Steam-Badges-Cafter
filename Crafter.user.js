@@ -2,7 +2,7 @@
 // @name			Steam Auto Mass Craft Cards Badges in Bulk
 // @name:zh-CN			Steam一键批量合卡合徽章
 // @name:zh-TW			Steam一鍵批量合卡合徽章
-// @version	 		2.22
+// @version	 		2.23
 // @description			(Steam Auto Mass Craft Trading Cards Badges in Bulk) It will automatically use up your gamecard sets for crafting badges. You can control the which card sets and how many sets to craft by using it.
 // @description:zh-CN		这是一个自动合卡插件，可以指定徽章合成的数量和种类
 // @description:zh-TW		這是一個自動合卡挿件，可以指定徽章合成的數量和種類
@@ -22,6 +22,7 @@ var		sales=["245070","762800","876740"],//Appid for sales cards
     config_cap_level = GM_getValue("config_cap_level", 0),
     threads = GM_getValue("threads", 3),
     config_blacklist = GM_getValue("config_blacklist", '');
+    config_max_page = GM_getValue("config_max_page", 5);
 (function() {
     'use strict';
     GM_addStyle(`.profile_xp_block_right {
@@ -778,7 +779,7 @@ font.mnotice {
         text.start = "批量合成徽章";
         text.title = "批量合卡";
         text.notice = '<p>这是一个自动合卡插件，可以指定徽章合成的数量和种类。</p><p>可在<a class="underlinedLink" href="https://steamcn.com/t339531-1-1" target="_blank">SteamCN</a>、<a class="underlinedLink" href="https://steamcommunity.com/sharedfiles/filedetails/?id=1409472832" target="_blank">社区指南</a>反馈问题</p></p>可以随时关闭本标签页来停止插件的自动操作</p><p><b style=color:#fff>计算模式:</b> 先扫描出每个徽章的可合成次数，扫描完毕后可以手动调整合成数量，再通过确认进行批量合卡。</p><p><b style=color:#fff>极速模式:</b> 先显示您的黑名单设置，确认后将直接合成所有可以用来合成的徽章，<font style=color:#fff>不会使用黑名单中的游戏卡牌</font>。</p><p><a class="underlinedLink" href="https://raw.githubusercontent.com/qiaohs/Steam-Badges-Cafter/master/res/steam_crafter_7.gif" target="_blank">Demo1</a>　<a class="underlinedLink" href="https://raw.githubusercontent.com/qiaohs/Steam-Badges-Cafter/master/res/steam_crafter_5.gif" target="_blank">Demo2</a></p>';
-        text.button1 = "开始统计本页可合成卡组(计算模式)";
+        text.button1 = "开始统计可合成卡组(计算模式)";
         text.buttonr1 = "不管那么多了，跳过扫描直接合卡！(极速模式)";
         text.button2 = "确认无误后开始合卡";
         text.button2no = "不合卡的吗？";
@@ -804,18 +805,21 @@ font.mnotice {
         text.timer_craft_d = '(仅针对计算模式有效，计算过后合成徽章的时间间隔(单位毫秒)，默认为500，请不要设置的过小)';
         text.blacklist = '黑名单';
         text.blacklist_d = '(将游戏的APPID填入，用逗号分隔，则该游戏的普通/闪亮徽章在任何模式下都不会合成。写法形如 <i style="color: #e0f170;">550,322310,730</i>)';
-        text.attention_title = '注意!</font><br>确认过后将进行合成，如果需要停止请关闭本标签页. ';
+        text.attention_title = '注意!</font><br>确认过后将进行合成 (前 <font class="appid" style=text-decoration:none>' + config_max_page + '</font> 页)，如果需要停止请关闭本标签页. ';
         text.attention_title2 = '您并没有设置黑名单，所以所有可合成徽章都将进行合成)';
         text.attention_title3 = '除了这些在你黑名单中的游戏: ';
         text.confirm = '确认';
         text.cancel = '取消';
         text.calculator_title='等级计算器(<font style="color:#fff">5个数字均可修改</font>)';
         text.mnotice='由于Steam服务器偶尔返回合卡结果传输出错输出为空，对于数量巨大的合成可能会出现合计结果较小，若对数量有精确要求请在合成之后刷新页面核对数量';
+        text.config_max_page = '最大扫描/合成页数(每页150个徽章)';
+		text.calculating_page = '正在读取徽章第 ';
+		text.calculating_page_d = ' 页...';
     } else {
         text.start = "Craft Badges in Bulk";
         text.title = "Craft Badges in Bulk";
         text.notice = '<p>Commentting on <a class="underlinedLink" href="https://steamcommunity.com/sharedfiles/filedetails/?id=1409472832" target="_blank">Community Guide</a>(Great thanks for <a class="underlinedLink" href="https://steamcommunity.com/profiles/76561198112219279" target="_blank">Aevoa</a>!)、<a class="underlinedLink" href="https://greasyfork.org/en/scripts/36393" target="_blank">Greasy Fork</a> for feedback.</p><p>Close this WEBPAGE when you want to stop crafting!</p><p>You can set intervals and blacklist badges in setting.</p><p><b style=color:#fff>Calculation mode:</b> Scan and calculate max badges you can craft first and you can regulating the number of card sets for specified bagdes. Then craft.</p><p><b style=color:#fff>Rapid mode:</b> Show you the setting of blacklist. Crafting immediately after you confirm it. It will use up ALL your available gamecard sets for crafting badges <font style=color:#fff>except</font> the games whose APPID is in the blacklist.</p><p><a class="underlinedLink" href="https://raw.githubusercontent.com/qiaohs/Steam-Badges-Cafter/master/res/steam_crafter_7.gif" target="_blank">Demo1</a>　<a class="underlinedLink" href="https://raw.githubusercontent.com/qiaohs/Steam-Badges-Cafter/master/res/steam_crafter_5.gif" target="_blank">Demo2</a></p>';
-        text.button1 = "Calculate how many badges you can craft in this page before craft";
+        text.button1 = "Calculate how many badges you can craft (before crafting)";
         text.buttonr1 = "Craft <b>now</b> rapidly!";
         text.button2 = "Start Crafting!";
         text.button2no = "No Cards for Crafting!";
@@ -840,7 +844,7 @@ font.mnotice {
         text.threads = 'Number of Threads';
         text.threads_d = '<font style=color:#fff>Only for rapid mode</font>. number type with default value of 3. Setting to bigger values makes crafting faster. A crafting in rapid mode with 3 threads is equal to 3 crafting in rapid mode with 1 threads simultaneously.';
         text.blacklist_d = '(The cards whose APPID is in the blacklist will not being used for crafting in any mode. Separated by commas, like <i style="color: #e0f170;">550,322310,730</i>)';
-        text.attention_title = 'Attention!</font><br>Please confirm that you are going to use up ALL your available gamecard sets for crafting badges. ';
+        text.attention_title = 'Attention!</font><br>Please confirm that you are going to use up ALL your available gamecard sets for crafting badges (first <font class="appid" style=text-decoration:none>' + config_max_page + '</font> pages). ';
         text.attention_title2 = 'As there is no APPID in your blacklist(you can add some in setting)';
         text.attention_title3 = 'Except the games whose APPID is in the blacklist: ';
         text.confirm = 'Confirm';
@@ -848,6 +852,9 @@ font.mnotice {
         text.blacklist = 'Blacklist';
         text.calculator_title='Level Calculator(<font style="color:#fff">5 numbers are all replaceable</font>)';
         text.mnotice='Due to the occasional bad return(but crafted successfully) of the Steam server, which usually results in a slightly small total result when you craft a large number of badges. If you need the accurate sum of crafted sets, please refresh the page and calculate it manually after crafting.';
+        text.config_max_page = 'The max number of page(150 badges per page) for scan/crafting';
+		text.calculating_page = 'Fetching your badges page... (';
+		text.calculating_page_d = ')';
     }
 
     $J('body').prepend(`
@@ -886,6 +893,8 @@ font.mnotice {
 					<input step="100" value="${timer_craft}" type="number" min="200" class="property timer_craft">${text.timer_craft_d}</p>
 				<p><font class="config_name">${text.threads} = </font>
 					<input value="${threads}" type="number" min="1" max="10" class="property threads">${text.threads_d}</p>
+				<p><font class="config_name">${text.config_max_page} = </font>
+					<input value="${config_max_page}" type="number" min="1" max="10" class="property config_max_page"></p>
 				<p><font class="config_name" style=" position: relative; top: -10px; ">${text.blacklist}: </font>
 					<textarea class="property config_blacklist">${config_blacklist}</textarea>
 					<br>${text.blacklist_d}</p>
@@ -923,13 +932,66 @@ font.mnotice {
         },
                    i * 500);
     } //hide the content that is not necessary
+
+	var first_page = $J('.badges_sheet').html(), all_page = $J('.badges_sheet').html(), page_n=1;
+
+    function isLastPage(a) {
+		var isLastPage = false;
+		$J(a).find('.badge_progress_info').each(function(i,e){
+			if($J(e).find('a').length<1){isLastPage = true; return false;}
+		});
+		return isLastPage;
+	}
+
+	/*function getPage(){
+		page_n++;
+		if(!isLastPage(first_page)&&config_max_page>1){
+		var url = g_strProfileURL + '/badges/?p=' + page_n,ddata;
+		$J.get(url,function(data){
+			ddata = $J(data).find('.badges_sheet').html();
+			all_page += ddata;
+
+			if(isLastPage(data)||page_n==config_max_page){
+				return;
+			}else{
+				getPage();
+			}
+		});
+		}
+	}*/
+
     function craft() {
         _save();
 
-        $J('.window_title').html(text.calculating);
         $J('.craft_title').slideUp();
         $J('#start').html('<img style="padding-top: 30px;" src="https://steamcommunity-a.akamaihd.net/public/images/login/throbber.gif">');
-        var total_number = $J('a.badge_craft_button').length,
+		craft_rvs1();
+	}
+
+    function craft_rvs1() {
+		page_n++;
+        $J('.window_title').html(text.calculating_page + page_n + text.calculating_page_d);
+		if(!isLastPage(first_page)&&config_max_page>1){
+		var url = g_strProfileURL + '/badges/?p=' + page_n,ddata;
+		$J.get(url,function(data){
+			ddata = $J(data).find('.badges_sheet').html();
+			all_page += ddata;
+
+			if(isLastPage(data)||page_n==config_max_page){
+				craft_rvs2();
+			}else{
+				craft_rvs1();
+			}
+		});
+		}else{
+			craft_rvs2();
+		}
+	}
+
+
+    function craft_rvs2() {
+        $J('.window_title').html(text.calculating + ' (<font class=calculate_dnum>0</font>/' + $J(all_page).find('a.badge_craft_button').length + ')');
+		var total_number = $J(all_page).find('a.badge_craft_button').length,
             each_count = 0,
             sum_sets = 0,
             sum_badges = 0;
@@ -941,7 +1003,7 @@ font.mnotice {
             $J('.craft_list').append("<p style='text-align:center;margin-top: 15px; letter-spacing: 8px;'>=========END=========</p>");
         }
 
-        $J('a.badge_craft_button').each(function(i) { ///if(i>1){return false;}//a.badge_craft_button//a.badge_row_overlay
+        $J(all_page).find('a.badge_craft_button').each(function(i) { ///if(i>1){return false;}//a.badge_craft_button//a.badge_row_overlay
             var badge_link = $J(this).attr('href'),
                 badge_level = 0,
                 count_min = 99999,
@@ -1011,6 +1073,7 @@ font.mnotice {
                     $J('.craft_list').append("<p><input class='ready_to_craft "+issales+"' type='number' value=" + upgrade_sets + " data-appid=" + __appID + " data-border=" + _border + " data-gappid=" + _gappid + " max=" + upgrade_sets + " min='0'> " + text.list1 + " APPID:<a href='/my/gamecards/"+__appID+"?border="+_border+"' target=_blank>" + __appID + "</a> " + text.list2 + " " + upgrade_sets + " " + text.list3 + " " + badge_level + " " + text.list4 + " " + gamename + after_stm + "</p>");
                     sum_sets += upgrade_sets;
                     sum_badges += 1;
+					$J('.calculate_dnum').html(sum_badges);
 
                     if (i == (total_number - 1)) { ///2-1
                         $J('#start').html('<div class="btn_grey_white_innerfade btn_large btn_large1" style="margin-top:0"><span>' + text.button2 + '</span></div>');
@@ -1217,10 +1280,32 @@ font.mnotice {
         }
     }
     function _rapid_do() {
-        $J('.window_title').html(text.crafting);
         $J('.attention_list').slideUp();
         $J('.confirm').html('<img src="https://steamcommunity-a.akamaihd.net/public/images/login/throbber.gif">');
-        var total_number = $J('a.badge_craft_button').length,
+		_rapid_do_1();
+	}
+    function _rapid_do_1() {
+		page_n++;
+        $J('.window_title').html(text.calculating_page + page_n + text.calculating_page_d);
+		if(!isLastPage(first_page)&&config_max_page>1){
+		var url = g_strProfileURL + '/badges/?p=' + page_n,ddata;
+		$J.get(url,function(data){
+			ddata = $J(data).find('.badges_sheet').html();
+			all_page += ddata;
+
+			if(isLastPage(data)||page_n==config_max_page){
+				_rapid_do_2();
+			}else{
+				_rapid_do_1();
+			}
+		});
+		}else{
+			_rapid_do_2();
+		}
+	}
+    function _rapid_do_2() {
+        $J('.window_title').html(text.crafting);
+        var total_number = $J(all_page).find('a.badge_craft_button').length,
             each_count = 0,
             sum_sets = 0,
             sum_badges = 0;
@@ -1233,7 +1318,7 @@ font.mnotice {
         }
 
         window.queue_r=[];
-        $J('a.badge_craft_button').each(function(i) {
+        $J(all_page).find('a.badge_craft_button').each(function(i) {
             var badge_link = $J(this).attr('href');
             if (i === 0) {
                 g_sessionID = $J(":root").html().match(/g_sessionID = "([^"]+)"/)[1];
@@ -1341,8 +1426,10 @@ font.mnotice {
         GM_setValue("timer_craft", $J("input.timer_craft").val());
         GM_setValue("config_blacklist", $J("textarea.config_blacklist").val());
         GM_setValue("threads", $J("input.threads").val());
+        GM_setValue("config_max_page", $J("input.config_max_page").val());
         config_cap_level=$J("input.config_cap_level").val();
         timer_scan=$J("input.timer_scan").val();
+        config_max_page=$J("input.config_max_page").val();
         timer_craft=$J("input.timer_craft").val();
         config_blacklist=$J("textarea.config_blacklist").val();
         threads=$J("input.threads").val();
