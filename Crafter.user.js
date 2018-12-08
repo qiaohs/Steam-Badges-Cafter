@@ -22,7 +22,7 @@ var		sales=["245070","762800","876740"],//Appid for sales cards
     config_cap_level = GM_getValue("config_cap_level", 0),
     threads = GM_getValue("threads", 3),
     config_blacklist = GM_getValue("config_blacklist", '');
-    config_max_page = GM_getValue("config_max_page", 5);
+    config_max_page = GM_getValue("config_max_page", 20);
 (function() {
     'use strict';
     GM_addStyle(`.profile_xp_block_right {
