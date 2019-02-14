@@ -2,7 +2,7 @@
 // @name			Steam Auto Mass Craft Cards Badges in Bulk
 // @name:zh-CN			Steam一键批量合卡合徽章
 // @name:zh-TW			Steam一鍵批量合卡合徽章
-// @version	 		2.24
+// @version	 		2.25
 // @description			(Steam Auto Mass Craft Trading Cards Badges in Bulk) It will automatically use up your gamecard sets for crafting badges. You can control the which card sets and how many sets to craft by using it.
 // @description:zh-CN		这是一个自动合卡插件，可以指定徽章合成的数量和种类
 // @description:zh-TW		這是一個自動合卡挿件，可以指定徽章合成的數量和種類
@@ -87,7 +87,7 @@ input.ready_to_craft.sales {
 	width: 882px;
 	height: 95px;
 	position: relative;
-	top: -115px;
+	top: -95px;
 	z-index: 10000001;
 	padding: 10px 0;
 	background: #1d1d1d;
@@ -116,7 +116,11 @@ input.ready_to_craft.finished {
 #start img {
 	padding-top: 0px;
 }
-
+.window_title {
+    padding: 3px 20px;
+    font-size: 20px;
+    border-bottom: 1px solid #485776;
+}
 .b_icon {
 	position: absolute!important;
 	padding: 12.5px!important;
@@ -859,14 +863,15 @@ font.mnotice {
 
     $J('body').prepend(`
 <div class="craft_background" style="opacity: 0.5;position: fixed; width: 100%; height: 100%;background:#000;cursor:pointer;z-index: 999;display:none;"></div>
-<div class="craft_window" style="position: fixed; z-index: 1000;height: 90%; width: 900px; left: 50%; margin-left:-450px; top: 20px;display:none;">
+<div class="craft_window newmodal" style="position: fixed; z-index: 1000;height: 90%; width: 900px; left: 50%; margin-left:-450px; top: 20px;display:none;">
+	<div class="modal_top_bar"></div>
 	<div class="newmodal_header_border">
 		<div class="newmodal_header">
 			<div class="newmodal_close"></div>
 			<div class="ellipsis window_title">${text.title}</div>
 		</div>
 	</div>
-	<div class="newmodal_content_border" style="background: #1d1d1d;height: 90%; overflow-y:auto;">
+	<div class="newmodal_content_border" style="height: 90%; overflow-y:auto;">
 		<div class="newmodal_content" style="color: #c4c6c7;">
 			<div class="craft_title" style="  font-size:16px">${text.notice}
 				<fieldset class="calculator">
