@@ -2,7 +2,7 @@
 // @name			Steam Auto Mass Craft Cards Badges in Bulk
 // @name:zh-CN			Steam一键批量合卡合徽章
 // @name:zh-TW			Steam一鍵批量合卡合徽章
-// @version	 		3.06
+// @version	 		3.07
 // @description			(Steam Auto Mass Craft Trading Cards Badges in Bulk) It will automatically use up your gamecard sets for crafting badges. You can control the which card sets and how many sets to craft by using it.
 // @description:zh-CN		这是一个自动合卡插件，可以指定徽章合成的数量和种类
 // @description:zh-TW		這是一個自動合卡挿件，可以指定徽章合成的數量和種類
@@ -16,7 +16,7 @@
 // @namespace 			https://greasyfork.org/users/155548
 // @namespace 			https://steamcommunity.com/profiles/76561198132556503
 // ==/UserScript==
-var		sales=["245070","762800","876740","991980","1195670","1343890","1465680","1658760"],//Appid for sales cards
+var		sales=["245070","762800","876740","991980","1195670","1343890","1465680","1658760","1797760"],//Appid for sales cards
     timer_craft = GM_getValue("timer_craft", 500),
     timer_scan = GM_getValue("timer_scan", 1000),
     config_cap_level = GM_getValue("config_cap_level", 0),
