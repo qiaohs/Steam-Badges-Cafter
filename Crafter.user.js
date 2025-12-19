@@ -2,7 +2,7 @@
 // @name			Steam Auto Mass Craft Cards Badges in Bulk
 // @name:zh-CN			Steam一键批量合卡合徽章
 // @name:zh-TW			Steam一鍵批量合卡合徽章
-// @version	 		3.14
+// @version	 		3.15
 // @description			(Steam Auto Mass Craft Trading Cards Badges in Bulk) It will automatically use up your gamecard sets for crafting badges. You can control the which card sets and how many sets to craft by using it.
 // @description:zh-CN		这是一个自动合卡插件，可以指定徽章合成的数量和种类
 // @description:zh-TW		這是一個自動合卡挿件，可以指定徽章合成的數量和種類
@@ -11,12 +11,13 @@
 // @grant			GM_addStyle
 // @grant        		GM_setValue
 // @grant        		GM_getValue
+// @grant        		unsafeWindow
 // @supportURL			https://steamcn.com/t339531-1-1
 // @icon			http://panhriq.yihaojingling.com/steam.green.ico
 // @namespace 			https://greasyfork.org/users/155548
 // @namespace 			https://steamcommunity.com/profiles/76561198132556503
 // ==/UserScript==
-var		sales=["245070","762800","876740","991980","1195670","1343890","1465680","1658760","1797760","2021850","2243720","2459330","2640280","2861690","2861720"],//Appid for sales cards
+var		sales=["245070","762800","876740","991980","1195670","1343890","1465680","1658760","1797760","2021850","2243720","2459330","2640280","2861690","2861720","3558920","4228010"],//Appid for sales cards
     timer_craft = GM_getValue("timer_craft", 500),
     timer_scan = GM_getValue("timer_scan", 1000),
     config_cap_level = GM_getValue("config_cap_level", 0),
@@ -782,7 +783,7 @@ font.mnotice {
     if (lan == "schinese" || lan == "tchinese") {
         text.start = "批量合成徽章";
         text.title = "批量合卡";
-        text.notice = '<p>这是一个自动合卡插件，可以指定徽章合成的数量和种类。</p><p>可在<a class="underlinedLink" href="https://steamcn.com/t339531-1-1" target="_blank">SteamCN</a>、<a class="underlinedLink" href="https://steamcommunity.com/sharedfiles/filedetails/?id=1409472832" target="_blank">社区指南</a>反馈问题</p></p>可以随时关闭本标签页来停止插件的自动操作</p><p><b style=color:#fff>计算模式:</b> 先扫描出每个徽章的可合成次数，扫描完毕后可以手动调整合成数量，再通过确认进行批量合卡。</p><p><font style="text-decoration:line-through;"><b style=color:#fff>极速模式:</b> 先显示您的黑名单设置，确认后将直接合成所有可以用来合成的徽章，不会使用黑名单中的游戏卡牌，多数徽章只能合成一级不建议用此模式，该模式适合大多数徽章合成5次的情况。</font><font style=color:#fff>【由于已有steam原生批量合卡接口，这个功能已经被弃用了，请使用左侧扫描功能】</font></p><p><a class="underlinedLink" href="https://pan.hriq.net/steam_crafter_1.gif" target="_blank">Demo1</a>　<a class="underlinedLink" href="https://pan.hriq.net/steam_crafter_2.gif" target="_blank">Demo2</a></p>';
+        text.notice = '<p>这是一个自动合卡插件，可以指定徽章合成的数量和种类。</p><p>可在<a class="underlinedLink" href="https://steamcn.com/t339531-1-1" target="_blank">SteamCN</a>、<a class="underlinedLink" href="https://steamcommunity.com/sharedfiles/filedetails/?id=1409472832" target="_blank">社区指南</a>反馈问题</p></p>可以随时关闭本标签页来停止插件的自动操作</p><p><b style=color:#fff>计算模式:</b> 先扫描出每个徽章的可合成次数，扫描完毕后可以手动调整合成数量，再通过确认进行批量合卡。<font style=color:red>【2025年起已不可手动调整为任意数量! 数量大于1的请求将被steam视为max!】</font></p><p><font style="text-decoration:line-through;"><b style=color:#fff>极速模式:</b> 先显示您的黑名单设置，确认后将直接合成所有可以用来合成的徽章，不会使用黑名单中的游戏卡牌，多数徽章只能合成一级不建议用此模式，该模式适合大多数徽章合成5次的情况。</font><font style=color:#fff>【由于已有steam原生批量合卡接口，这个功能已经被弃用了，请使用左侧扫描功能】</font></p><p><a class="underlinedLink" href="https://pan.hriq.net/steam_crafter_1.gif" target="_blank">Demo1</a>　<a class="underlinedLink" href="https://pan.hriq.net/steam_crafter_2.gif" target="_blank">Demo2</a></p>';
         text.button1 = "开始统计可合成卡组(计算模式)";
         text.buttonr1 = "不管那么多了，跳过扫描直接合卡！(极速模式)";
         text.button2 = "确认无误后开始合卡";
@@ -823,7 +824,7 @@ font.mnotice {
     } else {
         text.start = "Craft Badges in Bulk";
         text.title = "Craft Badges in Bulk";
-        text.notice = '<p>Commentting on <a class="underlinedLink" href="https://steamcommunity.com/sharedfiles/filedetails/?id=1409472832" target="_blank">Community Guide</a>(Great thanks for <a class="underlinedLink" href="https://steamcommunity.com/profiles/76561198112219279" target="_blank">Aevoa</a>!)、<a class="underlinedLink" href="https://greasyfork.org/en/scripts/36393" target="_blank">Greasy Fork</a> for feedback.</p><p>Close this WEBPAGE when you want to stop crafting!</p><p>You can set intervals and blacklist badges in setting.</p><p><b style=color:#fff>Calculation mode:</b> Scan and calculate max badges you can craft first and you can regulating the number of card sets for specified bagdes. Then craft.</p><p><font style="text-decoration:line-through;"><b style=color:#fff>Rapid mode:</b> Show you the setting of blacklist. Crafting immediately after you confirm it. It will use up ALL your available gamecard sets for crafting badges <font style=color:#fff>except</font> the games whose APPID is in the blacklist. This mode is not recommended when most badges can only be crafted for one level. It\'s suitable for that most badges can be crafted 5 times.</font><font style=color:#fff>【This function is deprecated since Steam introducing the native bulk craft API. Please calculate first.】</font></p><p><a class="underlinedLink" href="https://pan.hriq.net/steam_crafter_1.gif" target="_blank">Demo1</a>　<a class="underlinedLink" href="https://pan.hriq.net/steam_crafter_2.gif" target="_blank">Demo2</a></p>';
+        text.notice = '<p>Commentting on <a class="underlinedLink" href="https://steamcommunity.com/sharedfiles/filedetails/?id=1409472832" target="_blank">Community Guide</a>(Great thanks for <a class="underlinedLink" href="https://steamcommunity.com/profiles/76561198112219279" target="_blank">Aevoa</a>!)、<a class="underlinedLink" href="https://greasyfork.org/en/scripts/36393" target="_blank">Greasy Fork</a> for feedback.</p><p>Close this WEBPAGE when you want to stop crafting!</p><p>You can set intervals and blacklist badges in setting.</p><p><b style=color:#fff>Calculation mode:</b> Scan and calculate max badges you can craft first and you can regulating the number of card sets for specified bagdes. Then craft.<font style=color:red>【Manual adjustments are no longer possible since 2025! Requests with quantities greater than 1 will be treated as max by Steam server!】</font></p><p><font style="text-decoration:line-through;"><b style=color:#fff>Rapid mode:</b> Show you the setting of blacklist. Crafting immediately after you confirm it. It will use up ALL your available gamecard sets for crafting badges <font style=color:#fff>except</font> the games whose APPID is in the blacklist. This mode is not recommended when most badges can only be crafted for one level. It\'s suitable for that most badges can be crafted 5 times.</font><font style=color:#fff>【This function is deprecated since Steam introducing the native bulk craft API. Please calculate first.】</font></p><p><a class="underlinedLink" href="https://pan.hriq.net/steam_crafter_1.gif" target="_blank">Demo1</a>　<a class="underlinedLink" href="https://pan.hriq.net/steam_crafter_2.gif" target="_blank">Demo2</a></p>';
         text.button1 = "Calculate how many badges you can craft (before crafting)";
         text.buttonr1 = "Craft <b>now</b> rapidly!";
         text.button2 = "Start Crafting!";
@@ -918,7 +919,7 @@ font.mnotice {
 		<div class="newmodal_buttons start_1 button_s1" style="text-align:center;" id="start">
 			<div class="btn_grey_white_innerfade btn_large btn_large1" style="float: left;margin-left: 28px;"><span class="b_icon calculate"></span><span class="scalculate">${text.button1}</span>
 			</div>
-			<div class="btn_grey_white_innerfade btn_large rapid _rapid" style="float: left;margin-left: 28px;"><span class="b_icon lightning"></span><span class="slightning">${text.buttonr1}</span>
+			<div class="btn_grey_white_innerfade btn_large rapid _rapid" style="float: left;margin-left: 28px;display: none;"><span class="b_icon lightning"></span><span class="slightning">${text.buttonr1}</span>
 			</div>
 			<div class="setting _setting"></div>
 		</div>
@@ -1085,7 +1086,7 @@ font.mnotice {
                     }else{after_stm='';}
 
 
-                    $J('.craft_list').append("<p><input class='ready_to_craft "+issales+"' type='number' value=" + upgrade_sets + " data-appid=" + __appID + " data-border=" + _border + " data-gappid=" + _gappid + " max=" + upgrade_sets + " min='0'> " + text.list1 + " APPID:<a href='/my/gamecards/"+__appID+"?border="+_border+"' target=_blank>" + __appID + "</a> " + text.list2 + " " + upgrade_sets + " " + text.list3 + " " + badge_level + " " + text.list4 + " " + gamename + after_stm + "</p>");
+                    $J('.craft_list').append("<p><input class='ready_to_craft "+issales+"' type='number' value=" + upgrade_sets + " data-appid=" + __appID + " data-border=" + _border + " data-gappid=" + _gappid + " max=" + upgrade_sets + " min='0' step='0.1' oninput='validateSteamCraftInput(this)'> " + text.list1 + " APPID:<a href='/my/gamecards/"+__appID+"?border="+_border+"' target=_blank>" + __appID + "</a> " + text.list2 + " " + upgrade_sets + " " + text.list3 + " " + badge_level + " " + text.list4 + " " + gamename + after_stm + "</p>");
                     sum_sets += upgrade_sets;
                     sum_badges += 1;
 					$J('.calculate_dnum').html(sum_badges);
@@ -1117,6 +1118,7 @@ font.mnotice {
         $J('.craft_list').addClass("dischange");
 
         $J('.ready_to_craft').each(function() {
+            validateCraftInput(this);
             if ($J(this).val() > $J(this).attr("max")) {
                 $J(this).val($J(this).attr("max"));
             }
@@ -1582,3 +1584,39 @@ font.mnotice {
 	});
 
 })();
+
+unsafeWindow.validateSteamCraftInput = function(input) {
+    var value = parseFloat(input.value);  // 使用 parseFloat 获取浮动值
+    var max = parseInt(input.getAttribute('max'));
+    var min = parseInt(input.getAttribute('min'));
+
+    // 只允许0, 1 或 max 三种值
+    if (value === 0 || value === 1 || value === max) {
+        return; // 如果是0、1或max，直接返回
+    }
+
+    // 判断值的最后一位小数是0.1还是0.9
+    var lastDigit = (value * 10) % 10;
+    // 减少
+    if (lastDigit === 9) {
+        if (value > 1 && value < max) {
+            input.value = 1;
+        }else{
+            input.value = Math.round(input.value) - 1;
+        }
+    }
+    // 增加
+    else if (lastDigit === 1) {
+        if (value > 1 && value < max) {
+            input.value = max;
+        }else{
+            input.value = Math.round(input.value) + 1;
+        }
+    }else{
+        input.value = 0;
+    }
+
+    if (value < 0) {
+        input.value = 0;
+    }
+};
